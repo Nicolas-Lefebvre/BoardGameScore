@@ -4,6 +4,7 @@
   // On inclus l'autoload de Composer qui require les libs automatiquement
   require_once __DIR__ . "/../vendor/autoload.php";
   require_once __DIR__ . "/../app/Controllers/Controller.php";
+  require_once __DIR__ . "/../app/Controllers/SideController.php";
 //   require_once __DIR__ . "/../app/Models/Game.php";
   require_once __DIR__ . "/../app/Utils/database.php";
 // require_once __DIR__ . "/../app/views/home.tpl.php";
@@ -43,6 +44,36 @@
     "main-home"
   );
 
+  $router->map(
+    "GET",         
+    "/nouvelle-partie",   
+    [
+      "controller" => "SideController",
+      "method"     => "newPartie"
+    ],
+    "nouvelle-partie"
+  );
+
+  $router->map(
+    "GET",         
+    "/parties",   
+    [
+      "controller" => "SideController",
+      "method"     => "parties"
+    ],
+    "all-parties"
+  );
+
+  $router->map(
+    "GET",         
+    "/ajout-jeu",   
+    [
+      "controller" => "SideController",
+      "method"     => "game"
+    ],
+    "ajout-jeu"
+  );
+
     // Une fois toute mes routes définies, je demande a AltoRouter
   // de trouver laquelle correspond a l'URL demandée
   // Cette méthode nous renvoi un tableau associatif contenant les clés suivants :
@@ -79,6 +110,10 @@
     // Pareil pour l'appel d'une méthode.
     $controller = new $controllerName();            // Par exemple : $controller = new MainController();
     $controller->$methodToCall( $match['params'] ); // Par exemple : $controller->home()
+
+
+
+
   }
   else
   {
@@ -87,3 +122,4 @@
     http_response_code( 404 );
     exit( "404 Not Found" );
   }
+

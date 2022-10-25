@@ -43,7 +43,7 @@
         <div id="navbarCollapse" class="collapse navbar-collapse">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="<?= $_SERVER['BASE_URI'] . "/" ?>" class="nav-link active">
                 Accueil
               </a>
             </li>
@@ -63,11 +63,21 @@
             <li class="nav-item">
               <div class="dropdown">
               <a href="#" class="nav-link active">
-                Scores Détaillés
+                Scores
               </a>
               </div>
             </li>
             <li class="nav-item">
+              <div class="dropdown">
+              <a href="<?= $_SERVER['BASE_URI'] . "/parties" ?>" class="nav-link active">
+                Parties
+              </a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="<?= $_SERVER['BASE_URI'] . "/nouvelle-partie" ?>" class="nav-link active">
+                Nouvelle partie
+              </a>
             </li>
           </ul>
         </div>

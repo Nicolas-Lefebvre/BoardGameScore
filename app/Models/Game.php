@@ -11,6 +11,7 @@
         protected $editor;
         protected $picture;
         protected $played_parties;
+        protected $win_type;
 
 
         // Foreign Keys
@@ -52,6 +53,13 @@
         return $results;
         }
 
+        public function addNewGame($name, $editor=null, $picture=null, $played_parties=0, $min_players=1, $max_players, $win_type='highest_score', $cooperative=0, $team_play=0 )
+        {
+        $pdo       = Database::getPDO();
+        $pdo->query( "INSERT INTO `game` (`name`, `editor`, `min_players`,`max_players`, `win_type`, `cooperative`, `team_play`) 
+        VALUES ('$name', '$editor', $min_players, $max_players, '$win_type', $cooperative, $team_play)" );
+        }
+
 
         //==============================
         // Getters & Setters 
@@ -60,7 +68,7 @@
         /**
          * Get the value of description
          */ 
-        public function id()
+        public function getId()
         {
             return $this->id;
         }
@@ -142,6 +150,26 @@
         public function setPlayedParties($played_parties)
         {
                 $this->played_parties = $played_parties;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of win_type
+         */ 
+        public function getWinType()
+        {
+                return $this->win_type;
+        }
+
+        /**
+         * Set the value of win_type
+         *
+         * @return  self
+         */ 
+        public function setWinType($win_type)
+        {
+                $this->win_type = $win_type;
 
                 return $this;
         }

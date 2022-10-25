@@ -56,7 +56,7 @@ class player
     /**
      * Get the value of description
      */
-    public function id()
+    public function getId()
     {
         return $this->id;
     }
