@@ -97,7 +97,7 @@
          */ 
         public function getEditor()
         {
-            return $this->status;
+            return $this->editor;
         }
 
         /**

@@ -55,13 +55,13 @@ class SideController
 
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
-      $this->show( 'nouvelle-partie', [
+      $this->show( 'ajout-partie', [
         "playersList"   => $playersList,
         "gamesList"   => $gamesList,
         ] );
     }
 
-    public function parties( $params )
+    public function allParties( $params )
     {
 
       // $playerModel = new Player();
@@ -102,7 +102,7 @@ class SideController
       }
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
-      $this->show( 'listing', [
+      $this->show( 'listing-parties', [
         "partiesList"        => $partiesList,
         "orderedGamesList"   => $orderedGamesList,
         "orderedPlayersList" => $orderedPlayersList,
@@ -116,39 +116,54 @@ class SideController
       $gameModel = new Game();
       $gamesList=$gameModel->findAll();
 
-    //RECUPERATION DES DONNEES ENVOYEES PAR LE FORMULAIRES POUR L'AJOUT D'UN NOUVEAU JEU DANS LA DATABASE
-    if (isset($_GET['gameName'])) {
-      $gameNameToAdd = $_GET['gameName'];
-      // d($gameNameToAdd);
 
-      $gameEditorToAdd = $_GET['gameEditor'];
-      // d($gameEditorToAdd);
-      $minPlayerNumberToAdd = $_GET['minPlayerNumber'];
-      // d($minPlayerNumberToAdd);
-      $maxPlayerNumberToAdd = $_GET['maxPlayerNumber'];
-      // d($maxPlayerNumberToAdd);
+      //RECUPERATION DES DONNEES ENVOYEES PAR LE FORMULAIRES POUR L'AJOUT D'UN NOUVEAU JEU DANS LA DATABASE
+      if (isset($_GET['gameName'])) {
+        $gameNameToAdd = $_GET['gameName'];
+        // d($gameNameToAdd);
 
-      // on fait correspondre le winType choisi avec son nom exact dans la DB
-      if($_GET['scoreType'] === "Le score le plus élevé gagne"){$scoreTypeToAdd = "highest_score";}
-      elseif($_GET['scoreType'] === "Le score le plus bas gagne"){$scoreTypeToAdd = "lowest_score";}
-      elseif($_GET['scoreType'] === "Pas de score"){$scoreTypeToAdd = "no_score";}
-      // d($scoreTypeToAdd);
-      
-      if(isset($_GET['isCoopGame'])){$isCoopGameToAdd =1;} else{$isCoopGameToAdd =0;}
-      // d($isCoopGameToAdd);
-      if(isset($_GET['isTeamGame'])){$isTeamGameToAdd =1;} else{$isTeamGameToAdd =0;}
-      // d($isTeamGameToAdd);
+        $gameEditorToAdd = $_GET['gameEditor'];
+        // d($gameEditorToAdd);
+        $minPlayerNumberToAdd = $_GET['minPlayerNumber'];
+        // d($minPlayerNumberToAdd);
+        $maxPlayerNumberToAdd = $_GET['maxPlayerNumber'];
+        // d($maxPlayerNumberToAdd);
 
-      //  Ajout du nouveau jeu à la DB
-      $gameModel = new Game();
-      $gameModel->addNewGame($gameNameToAdd, $gameEditorToAdd, null, 0, $minPlayerNumberToAdd, $maxPlayerNumberToAdd, $scoreTypeToAdd, $isCoopGameToAdd, $isTeamGameToAdd );
-      
-    }
+        // on fait correspondre le winType choisi avec son nom exact dans la DB
+        if($_GET['scoreType'] === "Le score le plus élevé gagne"){$scoreTypeToAdd = "highest_score";}
+        elseif($_GET['scoreType'] === "Le score le plus bas gagne"){$scoreTypeToAdd = "lowest_score";}
+        elseif($_GET['scoreType'] === "Pas de score"){$scoreTypeToAdd = "no_score";}
+        // d($scoreTypeToAdd);
+        
+        if(isset($_GET['isCoopGame'])){$isCoopGameToAdd =1;} else{$isCoopGameToAdd =0;}
+        // d($isCoopGameToAdd);
+        if(isset($_GET['isTeamGame'])){$isTeamGameToAdd =1;} else{$isTeamGameToAdd =0;}
+        // d($isTeamGameToAdd);
+
+        //  Ajout du nouveau jeu à la DB
+        $gameModel = new Game();
+        $gameModel->addNewGame($gameNameToAdd, $gameEditorToAdd, null, 0, $minPlayerNumberToAdd, $maxPlayerNumberToAdd, $scoreTypeToAdd, $isCoopGameToAdd, $isTeamGameToAdd );
+        
+      }
 
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
       $this->show( 'ajout-jeu', [
         "gamesList"   => $gamesList,
+        ] );
+    }
+
+
+    public function allGames( $params )
+    {
+
+      $gameModel = new Game();
+      $gamesList=$gameModel->findAll();
+
+
+      // l'ID du produit demandé est dispo dans $params['partie_id']
+      $this->show( 'listing-games', [
+        "gamesList"        => $gamesList,
         ] );
     }
 

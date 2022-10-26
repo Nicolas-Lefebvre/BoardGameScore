@@ -46,12 +46,12 @@
 
   $router->map(
     "GET",         
-    "/nouvelle-partie",   
+    "/ajout-partie",   
     [
       "controller" => "SideController",
       "method"     => "newPartie"
     ],
-    "nouvelle-partie"
+    "ajout-partie"
   );
 
   $router->map(
@@ -59,7 +59,7 @@
     "/parties",   
     [
       "controller" => "SideController",
-      "method"     => "parties"
+      "method"     => "allParties"
     ],
     "all-parties"
   );
@@ -72,6 +72,16 @@
       "method"     => "game"
     ],
     "ajout-jeu"
+  );
+
+  $router->map(
+    "GET",         
+    "/jeux",   
+    [
+      "controller" => "SideController",
+      "method"     => "allGames"
+    ],
+    "all-games"
   );
 
     // Une fois toute mes routes définies, je demande a AltoRouter

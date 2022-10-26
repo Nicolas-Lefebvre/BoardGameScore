@@ -34,7 +34,7 @@
     <nav class="navbar navbar-expand-lg navbar-sticky navbar-airy navbar-light">
       <div class="container-fluid">
         <!-- Navbar Header  -->
-        <a href="#" class="navbar-brand">
+        <a href="<?= $_SERVER['BASE_URI'] . "/" ?>" class="navbar-brand">
           Board Game Scores
         </a>
         <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -42,42 +42,39 @@
         <!-- Navbar Collapse -->
         <div id="navbarCollapse" class="collapse navbar-collapse">
           <ul class="navbar-nav mx-auto">
+            
             <li class="nav-item">
               <a href="<?= $_SERVER['BASE_URI'] . "/" ?>" class="nav-link active">
                 Accueil
               </a>
             </li>
+
             <li class="nav-item">
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Jeux</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    
-                    <?php foreach($homeGames as $game): ?>
-                        <a class="dropdown-item" href="#"><?= $game->getName() ?></a>
-                    <?php endforeach; ?>
-
-
+                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/jeux" ?>">Liste des jeux</a>
+                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/ajout-jeu" ?>">Ajouter un jeu</a>
                     </div>
                 </div>
             </li>
+            
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Parties</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/parties" ?>">Liste des parties</a>
+                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/ajout-partie" ?>">Ajouter une partie</a>
+                    </div>
+                </div>
+            </li>
+
             <li class="nav-item">
               <div class="dropdown">
               <a href="#" class="nav-link active">
                 Scores
               </a>
               </div>
-            </li>
-            <li class="nav-item">
-              <div class="dropdown">
-              <a href="<?= $_SERVER['BASE_URI'] . "/parties" ?>" class="nav-link active">
-                Parties
-              </a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="<?= $_SERVER['BASE_URI'] . "/nouvelle-partie" ?>" class="nav-link active">
-                Nouvelle partie
-              </a>
             </li>
           </ul>
         </div>

@@ -1,6 +1,6 @@
 <section>
 
-    <table class="table table-striped col-md-12 col-lg-6">
+    <table class="table table-striped col-md-12 col-lg-8">
         <thead>
             <tr>
                     <th scope="col" class="text-center">N° Partie</th>

@@ -3,7 +3,7 @@
 
 
 <div class="col-12">
-    <form action="<?= $_SERVER['BASE_URI'] . "/nouvelle-partie" ?>" method="POST">
+    <form action="<?= $_SERVER['BASE_URI'] . "/ajout-partie" ?>" method="POST">
 
       <div class="form-group">
         <label for="gameName">Nom du jeu :</label>
