@@ -53,6 +53,52 @@
         return $results;
         }
 
+        // public function findGamesRecord()
+        // {
+        // $pdo       = Database::getPDO();
+        // $statement = $pdo->query( "SELECT * FROM `partie` INNER JOIN ORDER BY `played_parties` DESC LIMIT 10" );
+        // $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Game" );
+        // return $results;
+        // }
+
+        function findChampionByGame($partiesList, $gameId){
+
+            // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
+            $allGamesWinners=[];
+    
+            foreach ($partiesList as $partie) {
+              if($partie->getGameId() == $gameId){
+                $allGamesWinners[] = $partie->getWinner();
+              }
+            }
+            // d($allGamesWinners);
+    
+            // Ensuite on repère quel id de gagnant est le plus fréquent, en le placer en premiere valeur du tableau
+            $freq=array_count_values($allGamesWinners);
+            // d($freq);
+    
+            arsort($freq, SORT_NUMERIC);
+    
+            // Si une valeur id est renvoyée (si au moins une partie a été jouée pour ce jeu, il y aura un gagnant, sinon cela ne renvoit pas de valeur)
+            // On renvoit le nom du joueur associé à cet id
+            if(isset(array_values($freq)[0])):
+    
+              $playerModel = new Player();
+              $playerObject = $playerModel->find(array_values($freq)[0]);
+              return $playerObject->getName();
+              // return array_values($freq)[0];
+    
+            // Sinon, on écrit qu'aucune partie n'a été jouée.
+            else: 
+              return "aucune partie jouée";
+            endif;
+    
+            // d($freq);
+    
+          } 
+
+
+
         public function addNewGame($name, $editor=null, $picture=null, $played_parties=0, $min_players=1, $max_players, $win_type='highest_score', $cooperative=0, $team_play=0 )
         {
         $pdo       = Database::getPDO();

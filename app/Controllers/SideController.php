@@ -94,12 +94,12 @@ class SideController
         $orderedPlayersList[$currentPlayer->getId()] = $currentPlayer ;
       }
 
-      // ci-dessous, on fait correspondre l'index de chaque joueur avec son id afin de faire remonter ces infos facilement dans la vue.
-      $orderedPlayersList = [];
-      foreach($playersList as $currentPlayer)
-      {
-        $orderedPlayersList[$currentPlayer->getId()] = $currentPlayer ;
-      }
+      // // ci-dessous, on fait correspondre l'index de chaque joueur avec son id afin de faire remonter ces infos facilement dans la vue.
+      // $orderedPlayersList = [];
+      // foreach($playersList as $currentPlayer)
+      // {
+      //   $orderedPlayersList[$currentPlayer->getId()] = $currentPlayer ;
+      // }
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
       $this->show( 'listing-parties', [
@@ -160,10 +160,104 @@ class SideController
       $gameModel = new Game();
       $gamesList=$gameModel->findAll();
 
+      $partieModel = new Partie();
+      $partiesList = $partieModel->findAll();
+
+      $playerModel = new Player();
+      $playersList = $playerModel->findAll();
+
+      // $gameModel = new Game();
+      // $gamesOject=$gameModel->find($id);
+
+      $orderedgamesList = [];
+      foreach($gamesList as $currentGame)
+      {
+        $orderedgamesList[$currentGame->getId()] = $currentGame ;
+      }
+
+      $orderedpartiesList = [];
+      foreach($partiesList as $currentPartie)
+      {
+        $orderedpartiesList[$currentPartie->getId()] = $currentPartie ;
+      }
+
+      $orderedplayersList = [];
+      foreach($playersList as $currentPlayer)
+      {
+        $orderedplayersList[$currentPlayer->getId()] = $currentPlayer ;
+      }
+      
+      function findChampionByGame($partiesList, $gameId){
+
+        // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
+        $allGamesWinners=[];
+
+        foreach ($partiesList as $partie) {
+          if($partie->getGameId() == $gameId){
+            $allGamesWinners[] = $partie->getWinner();
+          }
+        }
+        // d($allGamesWinners);
+
+        // Ensuite on repère quel id de gagnant est le plus fréquent, en le placer en premiere valeur du tableau
+        $freq=array_count_values($allGamesWinners);
+        // d($freq);
+
+        arsort($freq, SORT_NUMERIC);
+
+        // Si une valeur id est renvoyée (si au moins une partie a été jouée pour ce jeu, il y aura un gagnant, sinon cela ne renvoit pas de valeur)
+        // On renvoit le nom du joueur associé à cet id
+        if(isset(array_values($freq)[0])):
+
+          $playerModel = new Player();
+          $playerObject = $playerModel->find(array_values($freq)[0]);
+          return $playerObject->getName();
+          // return array_values($freq)[0];
+
+        // Sinon, on écrit qu'aucune partie n'a été jouée.
+        else: 
+          return '<i class="text-muted">aucune partie jouée</i>';
+        endif;
+
+        // d($freq);
+      } 
+
+      function findRecordByGame($partiesList, $gameId){
+
+        // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
+        $allGamesRecords=[];
+
+        foreach ($partiesList as $partie) {
+          if($partie->getGameId() == $gameId){
+            $allGamesRecords[] = $partie->getWinningScore();
+          }
+        }
+        // d($allGamesRecords);
+
+        // Ensuite on repère quel score est le plus élevé, en le placer en premiere valeur du tableau
+        if(!empty($allGamesRecords)){
+        $maxScore=max($allGamesRecords);
+        // d($maxScore);
+        }
+
+        // Si une valeur est renvoyée 
+        // On renvoit ce score
+        if(!empty($allGamesRecords) && ($maxScore) !== null):
+            return $maxScore;
+          // Sinon, on écrit qu'aucune partie n'a été jouée.
+          else: 
+            return '<i class="text-muted">aucune partie jouée</i>';
+          endif;
+        // d($freq);
+      } 
+
+
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
       $this->show( 'listing-games', [
-        "gamesList"        => $gamesList,
+        "gamesList"          => $gamesList,
+        "orderedpartiesList" => $orderedpartiesList,
+        "partiesList"        => $partiesList,
         ] );
     }
 

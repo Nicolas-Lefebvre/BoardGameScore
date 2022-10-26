@@ -23,7 +23,7 @@ class player
     public function find($id)
     {
         $pdo          = Database::getPDO();
-        $statement    = $pdo->query("SELECT * FROM `game` WHERE `id` = " . $id);
+        $statement    = $pdo->query("SELECT * FROM `player` WHERE `id` = " . $id);
         $resultObject = $statement->fetchObject("Player");
         return $resultObject;
     }
