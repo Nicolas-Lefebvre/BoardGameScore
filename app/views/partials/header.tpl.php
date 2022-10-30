@@ -34,7 +34,7 @@
     <nav class="navbar navbar-expand-lg navbar-sticky navbar-airy navbar-light">
       <div class="container-fluid">
         <!-- Navbar Header  -->
-        <a href="<?= $_SERVER['BASE_URI'] . "/" ?>" class="navbar-brand">
+        <a href="<?= $router->generate('main-home') ?>" class="navbar-brand">
           Board Game Scores
         </a>
         <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -44,7 +44,7 @@
           <ul class="navbar-nav mx-auto">
             
             <li class="nav-item">
-              <a href="<?= $_SERVER['BASE_URI'] . "/" ?>" class="nav-link active">
+              <a href="<?= $router->generate('main-home') ?>" class="nav-link active">
                 Accueil
               </a>
             </li>
@@ -53,8 +53,8 @@
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Jeux</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/jeux" ?>">Liste des jeux</a>
-                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/ajout-jeu" ?>">Ajouter un jeu</a>
+                      <a  class="dropdown-item" href="<?= $router->generate('game-list') ?>">Liste des jeux</a>
+                      <a  class="dropdown-item" href="<?= $router->generate('game-add') ?>">Ajouter un jeu</a>
                     </div>
                 </div>
             </li>
@@ -63,8 +63,8 @@
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Parties</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/parties" ?>">Liste des parties</a>
-                      <a  class="dropdown-item" href="<?= $_SERVER['BASE_URI'] . "/ajout-partie" ?>">Ajouter une partie</a>
+                      <a  class="dropdown-item" href="<?= $router->generate('partie-list') ?>">Liste des parties</a>
+                      <a  class="dropdown-item" href="<?= $router->generate('partie-add') ?>">Ajouter une partie</a>
                     </div>
                 </div>
             </li>

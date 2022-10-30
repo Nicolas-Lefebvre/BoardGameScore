@@ -53,7 +53,7 @@ class SideController
 
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
-      $this->show( 'ajout-partie', [
+      $this->show( 'partie/add', [
         "playersList"   => $playersList,
         "gamesList"   => $gamesList,
         ] );
@@ -100,7 +100,7 @@ class SideController
       // }
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
-      $this->show( 'listing-parties', [
+      $this->show( 'partie/list', [
         "partiesList"        => $partiesList,
         "orderedGamesList"   => $orderedGamesList,
         "orderedPlayersList" => $orderedPlayersList,
@@ -145,7 +145,7 @@ class SideController
 
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
-      $this->show( 'ajout-jeu', [
+      $this->show( 'game/add', [
         "gamesList"   => $gamesList,
         ] );
     }
@@ -251,7 +251,7 @@ class SideController
 
 
       // l'ID du produit demandé est dispo dans $params['partie_id']
-      $this->show( 'listing-games', [
+      $this->show( 'game/list', [
         "gamesList"          => $gamesList,
         "orderedpartiesList" => $orderedpartiesList,
         "partiesList"        => $partiesList,
