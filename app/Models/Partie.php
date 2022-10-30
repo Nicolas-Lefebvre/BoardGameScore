@@ -28,7 +28,7 @@
         // Méthodes 
         //==============================
 
-        public function find( $id )
+        public static function find( $id )
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `game` WHERE `id` = " . $id );
@@ -36,7 +36,7 @@
         return $resultObject;
         }
 
-        public function findAll()
+        public static function findAll()
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `partie`" );
@@ -44,7 +44,7 @@
         return $results;
         }
 
-        public function findAllByDate()
+        public static function findAllByDate()
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `partie` ORDER BY `date` DESC" );
@@ -52,7 +52,7 @@
         return $results;
         }
 
-        public function findPartieWinningScore( $id )
+        public static function findPartieWinningScore( $id )
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT `winning_score` FROM `partie` WHERE `id` = ".$id);
@@ -60,7 +60,7 @@
         return $resultObject;
         }
 
-        public function findPartieLowestScore( $id )
+        public static function findPartieLowestScore( $id )
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `partie` WHERE `id` = " . $id ." ORDER BY `player%_score` ASC LIMIT 1");

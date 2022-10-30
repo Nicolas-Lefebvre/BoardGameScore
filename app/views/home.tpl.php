@@ -21,7 +21,7 @@
 
                   </ol>
                   <a 
-                    href="#" 
+                    href="<?= $router->generate('all-games') ?>" 
                     class="btn btn-dark"
                   >
                     Voir plus

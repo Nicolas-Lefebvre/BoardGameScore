@@ -21,7 +21,7 @@
         // Méthodes 
         //==============================
 
-        public function find( $id )
+        public static function find( $id )
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `game` WHERE `id` = " . $id );
@@ -29,7 +29,7 @@
         return $resultObject;
         }
 
-        public function findAll()
+        public static function findAll()
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `game`" );
@@ -37,15 +37,15 @@
         return $results;
         }
 
-        public function findForHome()
+        public static function findForHome()
         {
         $pdo       = Database::getPDO();
-        $statement = $pdo->query( "SELECT * FROM `game` LIMIT 10" );
+        $statement = $pdo->query( "SELECT * FROM `game` ORDER BY `played_parties` DESC LIMIT 10" );
         $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Game" );
         return $results;
         }
 
-        public function findTopPlayedGames()
+        public static function findTopPlayedGames()
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT `name`, `played_parties` FROM `game` ORDER BY `played_parties` DESC LIMIT 10" );

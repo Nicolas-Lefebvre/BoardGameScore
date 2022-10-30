@@ -17,11 +17,9 @@ class SideController
 
       // A défaut de savoir faire autrement (et mieux), on va récupérer ici les données
       // communes a toutes nos pages, EN PLUS des données transmises par viewData
-      $gameModel    = new Game();
-      $gameList     = $gameModel->findAll();
+      $gameList     = Game::findAll();
 
-      $gameModel = new Game();
-      $homeGames=$gameModel->findForHome();
+      $homeGames=Game::findForHome();
 
 
       // Pour vérifier les variables disponibles dans les vues
@@ -113,8 +111,7 @@ class SideController
     public function Game( $params )
     {
 
-      $gameModel = new Game();
-      $gamesList=$gameModel->findAll();
+      $gamesList=Game::findAll();
 
 
       //RECUPERATION DES DONNEES ENVOYEES PAR LE FORMULAIRES POUR L'AJOUT D'UN NOUVEAU JEU DANS LA DATABASE
@@ -157,14 +154,14 @@ class SideController
     public function allGames( $params )
     {
 
-      $gameModel = new Game();
-      $gamesList=$gameModel->findAll();
+      // $gameModel = new Game();
+      $gamesList=Game::findAll();
 
-      $partieModel = new Partie();
-      $partiesList = $partieModel->findAll();
+      // $partieModel = new Partie();
+      $partiesList = Partie::findAll();
 
-      $playerModel = new Player();
-      $playersList = $playerModel->findAll();
+      // $playerModel = new Player();
+      $playersList = Player::findAll();
 
       // $gameModel = new Game();
       // $gamesOject=$gameModel->find($id);

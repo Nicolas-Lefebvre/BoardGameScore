@@ -20,7 +20,7 @@ class player
     // Méthodes
     //==============================
 
-    public function find($id)
+    public static function find($id)
     {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query("SELECT * FROM `player` WHERE `id` = " . $id);
@@ -28,7 +28,7 @@ class player
         return $resultObject;
     }
 
-    public function findAll()
+    public static function findAll()
     {
         $pdo       = Database::getPDO();
         $statement = $pdo->query("SELECT * FROM `player`");
@@ -36,7 +36,7 @@ class player
         return $results;
     }
 
-    public function findBestPlayers()
+    public static function findBestPlayers()
     {
         $pdo       = Database::getPDO();
         $statement = $pdo->query("SELECT * FROM `player` ORDER BY `won_parties` DESC LIMIT 10");
