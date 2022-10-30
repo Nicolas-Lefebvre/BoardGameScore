@@ -3,7 +3,7 @@
   <?php 
   d($_GET);
   d($_POST);
-  if (empty($_GET['gameName'])):
+  if (empty($_POST['gameName'])):
     
   ?>
 
@@ -13,7 +13,7 @@
 
 
 <div class="col-12">
-    <form action="" method="get">
+    <form action="" method="post">
 
       <div class="form-group">
         <label for="gameName">Nom du jeu :</label>
@@ -67,7 +67,7 @@
     </form>
 </div>
 
-<?php elseif(!empty($_GET['gameName'])): ?>
+<?php elseif(!empty($_POST['gameName'])): ?>
   <h2>Jeu ajouté avec succés !</h2>
 
 <?php endif;?>

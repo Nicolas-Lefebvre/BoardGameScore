@@ -1,17 +1,23 @@
 <?php
 
-    class Game
+    require_once __DIR__ . "/CoreModel.php";
+
+    class Game extends CoreModel
     {
         //==============================
         // Propriétés
         //==============================
         
-        protected $id;
         protected $name;
         protected $editor;
         protected $picture;
         protected $played_parties;
         protected $win_type;
+        protected $min_players;
+        protected $max_players;
+        protected $cooperative;
+        protected $team_play;
+
 
 
         // Foreign Keys
@@ -99,11 +105,11 @@
 
 
 
-        public function addNewGame($name, $editor=null, $picture=null, $played_parties=0, $min_players=1, $max_players, $win_type='highest_score', $cooperative=0, $team_play=0 )
+        public function insert()
         {
         $pdo       = Database::getPDO();
         $pdo->query( "INSERT INTO `game` (`name`, `editor`, `min_players`,`max_players`, `win_type`, `cooperative`, `team_play`) 
-        VALUES ('$name', '$editor', $min_players, $max_players, '$win_type', $cooperative, $team_play)" );
+        VALUES ('$this->name', '$this->editor', $this->min_players, $this->max_players, '$this->win_type', $this->cooperative, $this->team_play)" );
         }
 
 
@@ -111,13 +117,6 @@
         // Getters & Setters 
         //==============================
 
-        /**
-         * Get the value of description
-         */ 
-        public function getId()
-        {
-            return $this->id;
-        }
 
         /**
          * Get the value of name
@@ -216,6 +215,86 @@
         public function setWinType($win_type)
         {
                 $this->win_type = $win_type;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of min_players
+         */ 
+        public function getMinPlayers()
+        {
+                return $this->min_players;
+        }
+
+        /**
+         * Set the value of min_players
+         *
+         * @return  self
+         */ 
+        public function setMinPlayers($min_players)
+        {
+                $this->min_players = $min_players;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of max_players
+         */ 
+        public function getMaxPlayers()
+        {
+                return $this->max_players;
+        }
+
+        /**
+         * Set the value of max_players
+         *
+         * @return  self
+         */ 
+        public function setMaxPlayers($max_players)
+        {
+                $this->max_players = $max_players;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of cooperative
+         */ 
+        public function getCooperative()
+        {
+                return $this->cooperative;
+        }
+
+        /**
+         * Set the value of cooperative
+         *
+         * @return  self
+         */ 
+        public function setCooperative($cooperative)
+        {
+                $this->cooperative = $cooperative;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of team_play
+         */ 
+        public function getTeamPlay()
+        {
+                return $this->team_play;
+        }
+
+        /**
+         * Set the value of team_play
+         *
+         * @return  self
+         */ 
+        public function setTeamPlay($team_play)
+        {
+                $this->team_play = $team_play;
 
                 return $this;
         }

@@ -1,12 +1,13 @@
 <?php
 
-    class Partie
+    require_once __DIR__ . "/CoreModel.php";
+
+    class Partie extends CoreModel
     {
         //==============================
         // Propriétés
         //==============================
         
-        protected $id;
         protected $game_id;
         protected $date;
         protected $players_number;
@@ -75,13 +76,6 @@
         // Getters & Setters 
         //==============================
 
-        /**
-         * Get the value of description
-         */ 
-        public function getId()
-        {
-            return $this->id;
-        }
       
 
         /**

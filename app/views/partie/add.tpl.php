@@ -13,7 +13,7 @@
             <?php endforeach;  ?>
 
         </select>
-        Votre jeu n'est pas présent dans la liste, <a href="<?= $_SERVER['BASE_URI'] . "/ajout-jeu" ?>">ajouter le à votre bibliothèque</a>
+        Votre jeu n'est pas présent dans la liste, <a href="<?= $router->generate('game-add')?>">ajouter le à votre bibliothèque</a>
       </div>
 
 

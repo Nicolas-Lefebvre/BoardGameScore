@@ -4,7 +4,9 @@
   // On inclus l'autoload de Composer qui require les libs automatiquement
   require_once __DIR__ . "/../vendor/autoload.php";
   require_once __DIR__ . "/../app/Controllers/Controller.php";
-  require_once __DIR__ . "/../app/Controllers/SideController.php";
+  require_once __DIR__ . "/../app/Controllers/GameController.php";
+  require_once __DIR__ . "/../app/Controllers/PartieController.php";
+  require_once __DIR__ . "/../app/Controllers/PlayerController.php";
 //   require_once __DIR__ . "/../app/Models/Game.php";
   require_once __DIR__ . "/../app/Utils/database.php";
 // require_once __DIR__ . "/../app/views/home.tpl.php";
@@ -46,43 +48,55 @@
 
   $router->map(
     "GET",         
-    "/partie/add",   
-    [
-      "controller" => "SideController",
-      "method"     => "newPartie"
-    ],
-    "partie-add"
-  );
-
-  $router->map(
-    "GET",         
     "/partie/list",   
     [
-      "controller" => "SideController",
-      "method"     => "allParties"
+      "controller" => "PArtieController",
+      "method"     => "list"
     ],
     "partie-list"
   );
 
   $router->map(
     "GET",         
-    "/game/add",   
+    "/partie/add",   
     [
-      "controller" => "SideController",
-      "method"     => "game"
+      "controller" => "PartieController",
+      "method"     => "add"
     ],
-    "game-add"
+    "partie-add"
   );
 
   $router->map(
     "GET",         
     "/game/list",   
     [
-      "controller" => "SideController",
-      "method"     => "allGames"
+      "controller" => "GameController",
+      "method"     => "list"
     ],
     "game-list"
   );
+
+  $router->map(
+    "GET",         
+    "/game/add",   
+    [
+      "controller" => "GameController",
+      "method"     => "add"
+    ],
+    "game-add"
+  );
+
+  $router->map(
+    "POST",         
+    "/game/add",   
+    [
+      "controller" => "GameController",
+      "method"     => "create"
+    ],
+    "game-create"
+  );
+
+
 
     // Une fois toute mes routes définies, je demande a AltoRouter
   // de trouver laquelle correspond a l'URL demandée
