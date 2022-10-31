@@ -20,13 +20,27 @@
                 $classementJeu++;   ?>
                 <tr>
 
-                    <th scope="row" class="text-center"><?= $classementJeu ?></th>
-                    <th scope="row" class="text-left"><?= $currentGame->getName(); ?></th>
-                    <th scope="row" class="text-left"><?= $currentGame->getEditor(); ?></th>
+                    <td scope="row" class="text-center"><?= $classementJeu ?></td>
+                    <td scope="row" class="text-left"><?= $currentGame->getName(); ?></td>
+                    <td scope="row" class="text-left"><?= $currentGame->getEditor(); ?></td>
                     
-                    <td class="text-center"><?= findChampionByGame($partiesList, $currentGame->getId()) ?></td>
+                    <td class="text-center">
+                        <?php 
+                            if(isset($orderedplayersList[$currentGame->getChampionId()]))
+                            {
+                                echo $orderedplayersList[$currentGame->getChampionId()]->getName() . " (" . $currentGame->getMostVictories() ." victoires)";
+                            }   
+                        ?>
+                    </td>
 
-                    <td class="text-center"><?= findRecordByGame($partiesList, $currentGame->getId()) ?></td>
+                    <td class="text-center">
+                        <?php 
+                            if(isset($orderedplayersList[$currentGame->getRecordmanId()]))
+                            {
+                                $currentGame->getRecord() . " (" . $orderedplayersList[$currentGame->getRecordmanId()]->getName() . ")" ; 
+                            }
+                        ?>
+                        </td>
                     <td class="text-center"><?= $currentGame->getPlayedParties(); ?></td>
 
                 </tr>

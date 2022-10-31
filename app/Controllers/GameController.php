@@ -1,12 +1,16 @@
 <?php
 
-require_once __DIR__ . "/../Models/Game.php";
-require_once __DIR__ . "/CoreController.php";
+namespace App\Controllers;
+
+use App\Models\Game;
+use App\Models\Partie;
+use App\Models\Player;
+
 
 Class GameController extends CoreController
 {
 
-    public function add( $params )
+    public function add(  )
     {
 
       $gamesList=Game::findAll();
@@ -38,14 +42,12 @@ Class GameController extends CoreController
             // d($maxPlayerNumberToAdd);
 
             // on fait correspondre le winType choisi avec son nom exact dans la DB
-            if($_POST['scoreType'] === "Le score le plus élevé gagne"){$winTypeToAdd = "highest_score";}
-            elseif($_POST['scoreType'] === "Le score le plus bas gagne"){$winTypeToAdd = "lowest_score";}
-            elseif($_POST['scoreType'] === "Pas de score"){$winTypeToAdd = "no_score";}
+            $winTypeToAdd = $_POST['scoreType'];
 
             
-            if(isset($_POST['isCoopGame'])){$isCoopGameToAdd =1;} else{$isCoopGameToAdd =0;}
+            if(isset($_POST['isCoopGame']) && $_POST['isCoopGame'] == '1' ){$isCoopGameToAdd =1;} else{$isCoopGameToAdd =0;}
 
-            if(isset($_POST['isTeamGame'])){$isTeamGameToAdd =1;} else{$isTeamGameToAdd =0;}
+            if(isset($_POST['isTeamGame']) && $_POST['isTeamGame'] == '1'){$isTeamGameToAdd =1;} else{$isTeamGameToAdd =0;}
 
             //  Ajout du nouveau jeu à l'objet
             $gameModel->setName($gameNameToAdd);
@@ -63,15 +65,15 @@ Class GameController extends CoreController
             
         }
 
-        // l'ID du produit demandé est dispo dans $params['partie_id']
-        $this->show( 'game/add', [
+        // // l'ID du produit demandé est dispo dans $params['partie_id']
+        // $this->show( 'game/add', [
 
-            ] );
+        //     ] );
 
     }
 
 
-    public function list( $params )
+    public function list(  )
     {
 
       // $gameModel = new Game();
@@ -104,70 +106,72 @@ Class GameController extends CoreController
         $orderedplayersList[$currentPlayer->getId()] = $currentPlayer ;
       }
       
-      function findChampionByGame($partiesList, $gameId){
+      // function findChampionByGame($partiesList, $gameId){
 
-        // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
-        $allGamesWinners=[];
+      //   // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
+      //   $allGamesWinners=[];
 
-        foreach ($partiesList as $partie) {
-          if($partie->getGameId() == $gameId){
-            $allGamesWinners[] = $partie->getWinner();
-          }
-        }
-        // d($allGamesWinners);
+      //   foreach ($partiesList as $partie) {
+      //     if($partie->getGameId() == $gameId){
+      //       $allGamesWinners[] = $partie->getWinner();
+      //     }
+      //   }
+      //   // d($allGamesWinners);
 
-        // Ensuite on repère quel id de gagnant est le plus fréquent, en le placer en premiere valeur du tableau
-        $freq=array_count_values($allGamesWinners);
-        // d($freq);
+      //   // Ensuite on repère quel id de gagnant est le plus fréquent, en le placer en premiere valeur du tableau
+      //   $freq=array_count_values($allGamesWinners);
+      //   // d($freq);
 
-        arsort($freq, SORT_NUMERIC);
+      //   arsort($freq, SORT_NUMERIC);
 
-        // Si une valeur id est renvoyée (si au moins une partie a été jouée pour ce jeu, il y aura un gagnant, sinon cela ne renvoit pas de valeur)
-        // On renvoit le nom du joueur associé à cet id
-        if(isset(array_values($freq)[0])):
+      //   // Si une valeur id est renvoyée (si au moins une partie a été jouée pour ce jeu, il y aura un gagnant, sinon cela ne renvoit pas de valeur)
+      //   // On renvoit le nom du joueur associé à cet id
+      //   if(isset(array_values($freq)[0])):
 
-          $playerModel = new Player();
-          $playerObject = $playerModel->find(array_values($freq)[0]);
-          return $playerObject->getName();
-          // return array_values($freq)[0];
+      //     $playerModel = new Player();
+      //     $playerObject = $playerModel->find(array_values($freq)[0]);
+      //     return $playerObject->getName();
+      //     // return array_values($freq)[0];
 
-        // Sinon, on écrit qu'aucune partie n'a été jouée.
-        else: 
-          return '<i class="text-muted">aucune partie jouée</i>';
-        endif;
+      //   // Sinon, on écrit qu'aucune partie n'a été jouée.
+      //   else: 
+      //     return '<i class="text-muted">aucune partie jouée</i>';
+      //   endif;
 
-        // d($freq);
-      } 
+      //   // d($freq);
+      // } 
 
 
-      function findRecordByGame($partiesList, $gameId){
+      // function findRecordByGame($partiesList, $gameId){
 
-        // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
-        $allGamesRecords=[];
+      //   // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
+      //   $allGamesRecords=[];
 
-        foreach ($partiesList as $partie) {
-          if($partie->getGameId() == $gameId){
-            $allGamesRecords[] = $partie->getWinningScore();
-          }
-        }
-        // d($allGamesRecords);
+      //   foreach ($partiesList as $partie) {
+      //     if($partie->getGameId() == $gameId){
+      //       $allGamesRecords[] = $partie->getWinningScore();
+      //     }
+      //   }
+      //   // d($allGamesRecords);
 
-        // Ensuite on repère quel score est le plus élevé, en le placer en premiere valeur du tableau
-        if(!empty($allGamesRecords)){
-        $maxScore=max($allGamesRecords);
-        // d($maxScore);
-        }
+      //   // Ensuite on repère quel score est le plus élevé, en le placer en premiere valeur du tableau
+      //   if(!empty($allGamesRecords)){
+      //   $maxScore=max($allGamesRecords);
+      //   // d($maxScore);
+      //   }
 
-        // Si une valeur est renvoyée 
-        // On renvoit ce score
-        if(!empty($allGamesRecords) && ($maxScore) !== null):
-            return $maxScore;
-          // Sinon, on écrit qu'aucune partie n'a été jouée.
-          else: 
-            return '<i class="text-muted">aucune partie jouée</i>';
-          endif;
-        // d($freq);
-      } 
+      //   // Si une valeur est renvoyée 
+      //   // On renvoit ce score
+      //   if(!empty($allGamesRecords) && ($maxScore) !== null):
+      //       return $maxScore;
+      //     // Sinon, on écrit qu'aucune partie n'a été jouée.
+      //     else: 
+      //       return '<i class="text-muted">aucune partie jouée</i>';
+      //     endif;
+      //   // d($freq);
+      // } 
+
+      
 
 
 
@@ -176,6 +180,7 @@ Class GameController extends CoreController
         "gamesList"          => $gamesList,
         "orderedpartiesList" => $orderedpartiesList,
         "partiesList"        => $partiesList,
+        "orderedplayersList" => $orderedplayersList
         ] );
     }
 

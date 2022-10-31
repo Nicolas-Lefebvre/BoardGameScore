@@ -1,37 +1,16 @@
 <?php
 
-require_once __DIR__ . "/../Models/Game.php";
-require_once __DIR__ . "/../Models/Player.php";
+namespace App\Controllers;
 
-class Controller
+
+use App\Models\Game;
+use App\Models\Player;
+use App\Utils\Database;
+
+
+class MainController extends CoreController
 {
 
-    public function show( $viewName, $viewData = [] )
-    {
-      global $router;
-
-      // Permet de créer des variables automatiquement pour chaque clé du tableau $viewData
-      // https://www.php.net/manual/fr/function.extract.php
-      extract( $viewData );
-
-      // A défaut de savoir faire autrement (et mieux), on va récupérer ici les données
-      // communes a toutes nos pages, EN PLUS des données transmises par viewData
-      $gameModel    = new Game();
-      $gameList     = $gameModel->findAll();
-
-
-      // Pour vérifier les variables disponibles dans les vues
-      d( get_defined_vars() );
-
-      // Avant d'inclure la page, on commence par le header
-      require_once __DIR__ . '/../views/partials/header.tpl.php';
-
-      // La page demandée
-      require_once __DIR__ . '/../views/' . $viewName . '.tpl.php';
-
-      // Ensuite, on oublie pas le footer
-      require_once __DIR__ . '/../views/partials/footer.tpl.php';
-    }
 
     public function home()
     {

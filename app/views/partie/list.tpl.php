@@ -19,7 +19,7 @@
                 <th scope="row" class="text-center"><?= $currentPartie->getDate(); ?></th>
                 <td class="text-center"><?=$orderedGamesList[$currentPartie->getGameId()]->getName() ?></td>
                 <td class="text-center"><?= $currentPartie->getPlayersNumber(); ?></td>
-                <td class="text-center"><?= $orderedPlayersList[$currentPartie->getWinner()]->getName(); ?></td>
+                <td class="text-center"><?= $orderedPlayersList[$currentPartie->getWinnerId()]->getName(); ?></td>
                 <td class="text-center"><?= $currentPartie->getWinningScore(); ?></td>
 
 

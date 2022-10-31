@@ -1,13 +1,17 @@
 <?php
 
-    require_once __DIR__ . "/CoreModel.php";
+namespace App\Models;
 
-    class Game extends CoreModel
-    {
+use App\Utils\Database;
+use PDO;
+
+
+class Game extends CoreModel
+{
         //==============================
         // Propriétés
         //==============================
-        
+
         protected $name;
         protected $editor;
         protected $picture;
@@ -17,6 +21,12 @@
         protected $max_players;
         protected $cooperative;
         protected $team_play;
+        protected $record;
+        protected $recordman_id;
+        protected $most_victories;
+        protected $champion_id;
+        
+
 
 
 
@@ -31,7 +41,7 @@
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `game` WHERE `id` = " . $id );
-        $resultObject = $statement->fetchObject( "Game" );      
+        $resultObject = $statement->fetchObject( "App\Models\Game" );      
         return $resultObject;
         }
 
@@ -39,7 +49,7 @@
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `game`" );
-        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Game" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "App\Models\Game" );
         return $results;
         }
 
@@ -47,7 +57,7 @@
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `game` ORDER BY `played_parties` DESC LIMIT 10" );
-        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Game" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "App\Models\Game" );
         return $results;
         }
 
@@ -55,7 +65,7 @@
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT `name`, `played_parties` FROM `game` ORDER BY `played_parties` DESC LIMIT 10" );
-        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Game" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "App\Models\Game" );
         return $results;
         }
 
@@ -69,39 +79,39 @@
 
         function findChampionByGame($partiesList, $gameId){
 
-            // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
-            $allGamesWinners=[];
-    
-            foreach ($partiesList as $partie) {
-              if($partie->getGameId() == $gameId){
+                // on identifie pour chaque jeu, toutes les parties avec l'id du gagnant
+                $allGamesWinners=[];
+
+                foreach ($partiesList as $partie) {
+                if($partie->getGameId() == $gameId){
                 $allGamesWinners[] = $partie->getWinner();
-              }
-            }
-            // d($allGamesWinners);
-    
-            // Ensuite on repère quel id de gagnant est le plus fréquent, en le placer en premiere valeur du tableau
-            $freq=array_count_values($allGamesWinners);
-            // d($freq);
-    
-            arsort($freq, SORT_NUMERIC);
-    
-            // Si une valeur id est renvoyée (si au moins une partie a été jouée pour ce jeu, il y aura un gagnant, sinon cela ne renvoit pas de valeur)
-            // On renvoit le nom du joueur associé à cet id
-            if(isset(array_values($freq)[0])):
-    
-              $playerModel = new Player();
-              $playerObject = $playerModel->find(array_values($freq)[0]);
-              return $playerObject->getName();
-              // return array_values($freq)[0];
-    
-            // Sinon, on écrit qu'aucune partie n'a été jouée.
-            else: 
-              return "aucune partie jouée";
-            endif;
-    
-            // d($freq);
-    
-          } 
+                }
+                }
+                // d($allGamesWinners);
+
+                // Ensuite on repère quel id de gagnant est le plus fréquent, en le placer en premiere valeur du tableau
+                $freq=array_count_values($allGamesWinners);
+                // d($freq);
+
+                arsort($freq, SORT_NUMERIC);
+
+                // Si une valeur id est renvoyée (si au moins une partie a été jouée pour ce jeu, il y aura un gagnant, sinon cela ne renvoit pas de valeur)
+                // On renvoit le nom du joueur associé à cet id
+                if(isset(array_values($freq)[0])):
+
+                $playerModel = new Player();
+                $playerObject = $playerModel->find(array_values($freq)[0]);
+                return $playerObject->getName();
+                // return array_values($freq)[0];
+
+                // Sinon, on écrit qu'aucune partie n'a été jouée.
+                else: 
+                return "aucune partie jouée";
+                endif;
+
+                // d($freq);
+
+                } 
 
 
 
@@ -137,12 +147,12 @@
         return $this;
         }
 
-            /**
+                /**
          * Get the value of status
          */ 
         public function getEditor()
         {
-            return $this->editor;
+                return $this->editor;
         }
 
         /**
@@ -152,9 +162,9 @@
          */ 
         public function setEditor($editor)
         {
-            $this->editor = $editor;
+                $this->editor = $editor;
 
-            return $this;
+                return $this;
         }
 
 
@@ -163,7 +173,7 @@
          */ 
         public function getPicture()
         {
-            return $this->picture;
+                return $this->picture;
         }
 
         /**
@@ -173,9 +183,9 @@
          */ 
         public function setPicture($picture)
         {
-            $this->picture = $picture;
+                $this->picture = $picture;
 
-            return $this;
+                return $this;
         }
 
 
@@ -298,4 +308,86 @@
 
                 return $this;
         }
-    }
+
+
+
+        /**
+         * Get the value of record
+         */ 
+        public function getRecord()
+        {
+                return $this->record;
+        }
+
+        /**
+         * Set the value of record
+         *
+         * @return  self
+         */ 
+        public function setRecord($record)
+        {
+                $this->record = $record;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of recordman_id
+         */ 
+        public function getRecordmanId()
+        {
+                return $this->recordman_id;
+        }
+
+        /**
+         * Set the value of recordman_id
+         *
+         * @return  self
+         */ 
+        public function setRecordmanId($recordman_id)
+        {
+                $this->recordman_id = $recordman_id;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of most_victories
+         */ 
+        public function getMostVictories()
+        {
+                return $this->most_victories;
+        }
+
+        /**
+         * Set the value of most_victories
+         *
+         * @return  self
+         */ 
+        public function setMostVictories($most_victories)
+        {
+                $this->most_victories = $most_victories;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of champion_id
+         */ 
+        public function getChampionId()
+        {
+                return $this->champion_id;
+        }
+
+        /**
+         * Set the value of champion_id
+         *
+         * @return  self
+         */ 
+        public function setChampionId($champion_id)
+        {
+                $this->champion_id = $champion_id;
+
+                return $this;
+        }
+}

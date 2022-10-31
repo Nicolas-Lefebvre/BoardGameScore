@@ -3,20 +3,9 @@
 
   // On inclus l'autoload de Composer qui require les libs automatiquement
   require_once __DIR__ . "/../vendor/autoload.php";
-  require_once __DIR__ . "/../app/Controllers/Controller.php";
-  require_once __DIR__ . "/../app/Controllers/GameController.php";
-  require_once __DIR__ . "/../app/Controllers/PartieController.php";
-  require_once __DIR__ . "/../app/Controllers/PlayerController.php";
-//   require_once __DIR__ . "/../app/Models/Game.php";
-  require_once __DIR__ . "/../app/Utils/database.php";
-// require_once __DIR__ . "/../app/views/home.tpl.php";
+  
 
 
-// require "../app/views/partials/header.tpl.php";
-
-// require "../app/views/home.tpl.php";
-
-// require "../app/views/partials/footer.tpl.php";
 
 
   //=========================
@@ -26,23 +15,16 @@
   // J'instancie la classe AltoRouter
   $router = new AltoRouter();
 
-  // Je précise à AltoRouter dans quel sous-dossier 
-  // se trouve mon projet par rapport a /var/www/html
-  // techniquement, tout ce qui est après "localhost" dans l'URL
   $router->setBasePath( $_SERVER['BASE_URI'] );
 
   // Je défini ma première route d'AltoRouter avec ->map()
   $router->map(
-    // Param 1 : Méthode HTTP
-    "GET",       
-    // Param 2 : URL ou Pattern d'URL correspondant a la route   
+    "GET",        
     "/",   
-    // Param 3 : Ce qu'on veut, ici un tableau avec les noms du controleur et la méthode a appeller
     [
-      "controller" => "Controller",
+      "controller" => "MainController",
       "method"     => "home"
     ],
-    // Param 4 : Nom de la route, par convention "nomducontroller-nomdelamethode"
     "main-home"
   );
 
@@ -50,7 +32,7 @@
     "GET",         
     "/partie/list",   
     [
-      "controller" => "PArtieController",
+      "controller" => "PartieController",
       "method"     => "list"
     ],
     "partie-list"
@@ -64,6 +46,16 @@
       "method"     => "add"
     ],
     "partie-add"
+  );
+
+  $router->map(
+    "POST",         
+    "/partie/add",   
+    [
+      "controller" => "PartieController",
+      "method"     => "create"
+    ],
+    "partie-create"
   );
 
   $router->map(
@@ -108,42 +100,53 @@
   // http://altorouter.com/usage/matching-requests.html
   $match = $router->match();
 
-//   d( $match );
-//   d(get_defined_vars());
+  //   d( $match );
+  //   d(get_defined_vars());
 
-  if( $match !== false )
-  {
-    // Si c'est le cas, je récupère les infos de cette route
-    // Grace a AltoRouter, c'est directement dispo dans $match['target']
-    $routeData = $match['target'];
+//------------------------------------ALTO DISPATCHEUR---------------------------------
+  $dispatcher = new Dispatcher($match, 'ErrorController::err404');
 
-    // A partir de là, ça marche comme avant !
+  // La méthode setControllersNamespace permet de définir un namespace commun à tous nos controllers. Ainsi on évite la répétition de ce namespace et donc les erreurs
+  // fonctionne pour les routes et la déclaration du dispatcher ci-dessus. 
+  $dispatcher->setControllersNamespace('App\Controllers');
 
-    // J'en déduis, l'action a executer : le controller et la méthode
-    $controllerName = $routeData['controller'];
-    $methodToCall   = $routeData['method'];
+  // Une fois le "dispatcher" configuré, on lance le dispatch qui va exécuter la méthode du controller
+  $dispatcher->dispatch();
+  //----------------------------------FIN ALTO DISPATCHEUR-------------------------------
 
-    // J'ai donc désormais deux variables, sous forme de string
-    // qui vont contenir respectivement le nom du controller à instancier
-    // et le nom de la méthode à appeller
-    // d( $controllerName ); // par exemple : "MainController"
-    // d( $methodToCall   ); // par exemple : "home"
+  // if( $match !== false )
+  // {
+  //   // Si c'est le cas, je récupère les infos de cette route
+  //   // Grace a AltoRouter, c'est directement dispo dans $match['target']
+  //   $routeData = $match['target'];
 
-    // On doit maintenant executer l'action
-    // Heureusement en PHP, on peut instancier une classe dont le nom se trouve dans une variable
-    // Pareil pour l'appel d'une méthode.
-    $controller = new $controllerName();            // Par exemple : $controller = new MainController();
-    $controller->$methodToCall( $match['params'] ); // Par exemple : $controller->home()
+  //   // A partir de là, ça marche comme avant !
+
+  //   // J'en déduis, l'action a executer : le controller et la méthode
+  //   $controllerName = $routeData['controller'];
+  //   $methodToCall   = $routeData['method'];
+
+  //   // J'ai donc désormais deux variables, sous forme de string
+  //   // qui vont contenir respectivement le nom du controller à instancier
+  //   // et le nom de la méthode à appeller
+  //   // d( $controllerName ); // par exemple : "MainController"
+  //   // d( $methodToCall   ); // par exemple : "home"
+
+  //   // On doit maintenant executer l'action
+  //   // Heureusement en PHP, on peut instancier une classe dont le nom se trouve dans une variable
+  //   // Pareil pour l'appel d'une méthode.
+  //   $controller = new $controllerName();            // Par exemple : $controller = new MainController();
+  //   $controller->$methodToCall( $match['params'] ); // Par exemple : $controller->home()
 
 
 
 
-  }
-  else
-  {
-    // Si aucune route ne correspond dans le tableau
-    // On affiche une erreur 404
-    http_response_code( 404 );
-    exit( "404 Not Found" );
-  }
+  // }
+  // else
+  // {
+  //   // Si aucune route ne correspond dans le tableau
+  //   // On affiche une erreur 404
+  //   http_response_code( 404 );
+  //   exit( "404 Not Found" );
+  // }
 

@@ -1,6 +1,9 @@
 <?php
 
-    require_once __DIR__ . "/CoreModel.php";
+namespace App\Models;
+
+use App\Utils\Database;
+use PDO;
 
     class player extends CoreModel
     {
@@ -25,7 +28,7 @@
         {
             $pdo          = Database::getPDO();
             $statement    = $pdo->query("SELECT * FROM `player` WHERE `id` = " . $id);
-            $resultObject = $statement->fetchObject("Player");
+            $resultObject = $statement->fetchObject("App\Models\Player");
             return $resultObject;
         }
 
@@ -33,7 +36,15 @@
         {
             $pdo       = Database::getPDO();
             $statement = $pdo->query("SELECT * FROM `player`");
-            $results   = $statement->fetchAll(PDO::FETCH_CLASS, "Player");
+            $results   = $statement->fetchAll(PDO::FETCH_CLASS, "App\Models\Player");
+            return $results;
+        }
+
+        public static function findAllNames()
+        {
+            $pdo       = Database::getPDO();
+            $statement = $pdo->query("SELECT `name` FROM `player`");
+            $results   = $statement->fetchAll(PDO::FETCH_COLUMN);
             return $results;
         }
 
@@ -41,7 +52,7 @@
         {
             $pdo       = Database::getPDO();
             $statement = $pdo->query("SELECT * FROM `player` ORDER BY `won_parties` DESC LIMIT 10");
-            $results   = $statement->fetchAll(PDO::FETCH_CLASS, "Player");
+            $results   = $statement->fetchAll(PDO::FETCH_CLASS, "App\Models\Player");
             return $results;
         }
 

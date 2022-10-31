@@ -1,23 +1,21 @@
 <?php
 
-    require_once __DIR__ . "/CoreModel.php";
+namespace App\Models;
 
-    class Partie extends CoreModel
-    {
+use App\Utils\Database;;
+use PDO;
+
+
+        class Partie extends CoreModel
+        {
         //==============================
         // Propriétés
         //==============================
-        
+
         protected $game_id;
         protected $date;
         protected $players_number;
-        protected $winner;
-        protected $player1_id;
-        protected $player2_id;
-        protected $player3_id;
-        protected $player4_id;
-        protected $player5_id;
-        protected $player6_id;
+        protected $winner_id;
         protected $winning_score;
 
 
@@ -33,7 +31,7 @@
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `game` WHERE `id` = " . $id );
-        $resultObject = $statement->fetchObject( "Game" );      
+        $resultObject = $statement->fetchObject( "App\Models\Game" );      
         return $resultObject;
         }
 
@@ -41,7 +39,7 @@
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `partie`" );
-        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Partie" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "App\Models\Partie" );
         return $results;
         }
 
@@ -49,7 +47,7 @@
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `partie` ORDER BY `date` DESC" );
-        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Partie" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "App\Models\Partie" );
         return $results;
         }
 
@@ -57,7 +55,7 @@
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT `winning_score` FROM `partie` WHERE `id` = ".$id);
-        $resultObject = $statement->fetchObject( "Partie" );      
+        $resultObject = $statement->fetchObject( "App\Models\Partie" );      
         return $resultObject;
         }
 
@@ -65,7 +63,7 @@
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `partie` WHERE `id` = " . $id ." ORDER BY `player%_score` ASC LIMIT 1");
-        $resultObject = $statement->fetchObject( "Partie" );      
+        $resultObject = $statement->fetchObject( "App\Models\Partie" );      
         return $resultObject;
         }
 
@@ -76,7 +74,7 @@
         // Getters & Setters 
         //==============================
 
-      
+
 
         /**
          * Get the value of game_id
@@ -141,9 +139,9 @@
         /**
          * Get the value of winner
          */ 
-        public function getWinner()
+        public function getWinnerId()
         {
-                return $this->winner;
+                return $this->winner_id;
         }
 
         /**
@@ -151,9 +149,9 @@
          *
          * @return  self
          */ 
-        public function setWinner($winner)
+        public function setWinnerId($winner_id)
         {
-                $this->winner = $winner;
+                $this->winner_id = $winner_id;
 
                 return $this;
         }

@@ -1,12 +1,15 @@
 <?php
+namespace App\Controllers;
 
-require_once __DIR__ . "/../Models/Partie.php";
-require_once __DIR__ . "/CoreController.php";
+use App\Models\Game;
+use App\Models\Partie;
+use App\Models\Player;
+
 
 class PartieController extends CoreController
 {
 
-    public function add( $params )
+    public function add( )
     {
 
       $playersList=Player::findAll();
@@ -25,7 +28,71 @@ class PartieController extends CoreController
         ] );
     }
 
-    public function list( $params )
+    public function create()
+    {
+        $partieModel = new Partie;
+        $playerList = Player::findAll();
+
+        //RECUPERATION DES DONNEES ENVOYEES PAR LE FORMULAIRES POUR L'AJOUT D'UN NOUVEAU JEU DANS LA DATABASE
+        if (isset($_POST) && !empty($_POST)) {
+            $gameId = $_POST['gameId'];
+   
+            $playerNumber = $_POST['playerNumber'];
+
+            $date = $_POST['partieDate'];
+            
+
+            //  Ajout du nouveau jeu à l'objet
+            $partieModel->setGameId($gameId);
+            $partieModel->setPlayersNumber($playerNumber);
+            $partieModel->setDate($date);
+
+
+            // Tout d'abord on récupère la liste des joueurs participants entrés dans le formulaire, et on les met dans un tableau
+            $partiePlayers = [];
+            for($i=1 ; $i <= $playerNumber ; $i++)
+            {
+              $partiePlayers[] = $_POST['joueur'.$i];
+            }
+            
+            //Puis on compare ce tableau aux joueurs existants dans la BDD : si le joueur existe déjà, on stocke son id dans un nouveau tableau ($newPartiePlayers)
+            $existingPartiePlayers=[];
+
+            foreach($partiePlayers as $currentPartiePlayer)
+            {
+              foreach($playerList as $currentPlayer)
+              {
+                if($currentPlayer->getName() == $currentPartiePlayer)
+                {
+                  $existingPartiePlayers[$currentPlayer->getName()] = $currentPlayer->getId();
+                }
+              }             
+            }
+          
+            //Puis on regarde quel joueurs qui a participé n'est pas déjà existants dans la BDD: pour ceux qui n'existent pas, on les stocke dans un nouveau tableau ($newPartiePlayers)
+            // On procède en comparant tous les nom existants dans la BDD avec les noms de ceux ayant participé, et pour ceux qui n'y sont pas, on les ajoute au tableau.
+            $playerNameList = Player::findAllNames();
+            $newPartiePlayers=[];
+            foreach($partiePlayers as $currentPartiePlayer)
+            {
+                if(!in_array($currentPartiePlayer, $playerNameList))
+                {
+                  $newPartiePlayers[]=$currentPartiePlayer;
+                }
+            }           
+
+            // $partieModel->insert();
+
+        }
+
+        // // l'ID du produit demandé est dispo dans $params['partie_id']
+        // $this->show( 'game/add', [
+
+        //     ] );
+
+    }
+
+    public function list()
     {
 
       // $playerModel = new Player();

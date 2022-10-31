@@ -1,4 +1,6 @@
 <?php
+namespace App\Utils;
+use PDO;
 
 
   // Retenir son utilisation  => Database::getPDO()
