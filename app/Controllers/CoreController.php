@@ -46,4 +46,22 @@ class CoreController
         require_once __DIR__ . '/../views/' . $viewName . '.tpl.php';
         require_once __DIR__ . '/../views/partials/footer.tpl.php';
     }
+
+    /**
+     * Méthode permettant de rediriger vers n'importe quelle page de notre application
+     *
+     * @param string $routeName
+     * @return void
+     */
+    protected function redirect($routeName)
+    {
+        // On utilise le mot clé global pour avoir accès à la variable $router contenant notre instance d'altorouter
+        global $router;
+        // On génère l'url vers la page ciblée
+        $url = $router->generate($routeName);
+        // On la transmet à header
+        header('Location: ' . $url);
+        // On coupe l'exécution de cette page
+        exit;
+    }
 }

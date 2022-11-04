@@ -60,6 +60,7 @@ Class GameController extends CoreController
 
             $gameModel->insert();
 
+            $this->redirect('game-list');
 
             // $gameModel->addNewGame($gameNameToAdd, $gameEditorToAdd, null, 0, $minPlayerNumberToAdd, $maxPlayerNumberToAdd, $scoreTypeToAdd, $isCoopGameToAdd, $isTeamGameToAdd );
             

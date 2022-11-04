@@ -45,6 +45,15 @@ class Game extends CoreModel
         return $resultObject;
         }
 
+
+        public static function findWinType( $id )
+        {
+        $pdo          = Database::getPDO();
+        $statement    = $pdo->query( "SELECT `win_type` FROM `game` WHERE `id` = " . $id );
+        $resultObject = $statement->fetchObject( "App\Models\Game" );      
+        return $resultObject;
+        }
+
         public static function findAll()
         {
         $pdo       = Database::getPDO();
@@ -69,13 +78,21 @@ class Game extends CoreModel
         return $results;
         }
 
-        // public function findGamesRecord()
-        // {
-        // $pdo       = Database::getPDO();
-        // $statement = $pdo->query( "SELECT * FROM `partie` INNER JOIN ORDER BY `played_parties` DESC LIMIT 10" );
-        // $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Game" );
-        // return $results;
-        // }
+        public function findGamesRecord()
+        {
+        $pdo       = Database::getPDO();
+        $statement = $pdo->query( "SELECT * FROM `partie` INNER JOIN ORDER BY `played_parties` DESC LIMIT 10" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Game" );
+        return $results;
+        }
+
+        public static function findGameRecord($gameId)
+        {
+        $pdo       = Database::getPDO();
+        $statement = $pdo->query( "SELECT `record` FROM `game` WHERE `id` = " . $gameId );
+        $results   = $statement->fetchObject(self::class);
+        return $results;
+        }
 
         function findChampionByGame($partiesList, $gameId){
 
@@ -117,9 +134,40 @@ class Game extends CoreModel
 
         public function insert()
         {
-        $pdo       = Database::getPDO();
-        $pdo->query( "INSERT INTO `game` (`name`, `editor`, `min_players`,`max_players`, `win_type`, `cooperative`, `team_play`) 
-        VALUES ('$this->name', '$this->editor', $this->min_players, $this->max_players, '$this->win_type', $this->cooperative, $this->team_play)" );
+                $pdo       = Database::getPDO();
+                $pdo->query( "INSERT INTO `game` (`name`, `editor`, `min_players`,`max_players`, `win_type`, `cooperative`, `team_play`) 
+                VALUES ('$this->name', '$this->editor', $this->min_players, $this->max_players, '$this->win_type', $this->cooperative, $this->team_play)" );
+        }
+
+        public function update()
+        {
+                // Récupération de l'objet PDO représentant la connexion à la DB
+                $pdo = Database::getPDO();
+
+                // Ecriture de la requête UPDATE
+                $sql = "
+                UPDATE `game`
+                SET
+                        record = :record,
+                        recordman_id = :recordman_id,
+                        played_parties = :played_parties
+                WHERE `id` = :id
+                ";
+
+                // On envoie la requete à PDO avec des emplacements pour qu'il la prépare.
+                $query = $pdo->prepare($sql);
+
+                // Une fois que PDO est courant du format de la requete, on lui donne les valeurs à mettre dans les emplacements
+                // Le 3ème argument permet de forcer la vérification d'un type de donnée (par défaut c'est string : PDO::PARAM_STR, si on veut vérifier un entier c'est PDO::PARAM_INT)
+                $query->bindValue(':record', $this->record, PDO::PARAM_INT);
+                $query->bindValue(':recordman_id', $this->recordman_id, PDO::PARAM_INT);
+                $query->bindValue(':played_parties', $this->played_parties, PDO::PARAM_INT);
+                $query->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+                // Execution de la requête de mise à jour avec la méthode execute
+                $updatedRows = $query->execute();
+                // On retourne VRAI, si au moins une ligne ajoutée
+                return ($updatedRows);
         }
 
 

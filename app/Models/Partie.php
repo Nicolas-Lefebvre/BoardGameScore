@@ -67,6 +67,14 @@ use PDO;
         return $resultObject;
         }
 
+        public function insert()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "INSERT INTO `partie` (`game_id`, `date`, `players_number`,`winner_id`, `winning_score`) 
+                VALUES ('{$this->game_id}', '{$this->date}', {$this->players_number}, {$this->winner_id}, '{$this->winning_score}')" );
+
+                $this->id = $pdo->lastInsertId();
+        }
 
 
 
@@ -156,125 +164,6 @@ use PDO;
                 return $this;
         }
 
-        /**
-         * Get the value of player1_id
-         */ 
-        public function getPlayer1Id()
-        {
-                return $this->player1_id;
-        }
-
-        /**
-         * Set the value of player1_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer1Id($player1_id)
-        {
-                $this->player1_id = $player1_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player2_id
-         */ 
-        public function getPlayer2Id()
-        {
-                return $this->player2_id;
-        }
-
-        /**
-         * Set the value of player2_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer2Id($player2_id)
-        {
-                $this->player2_id = $player2_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player3_id
-         */ 
-        public function getPlayer3Id()
-        {
-                return $this->player3_id;
-        }
-
-        /**
-         * Set the value of player3_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer3Id($player3_id)
-        {
-                $this->player3_id = $player3_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player4_id
-         */ 
-        public function getPlayer4Id()
-        {
-                return $this->player4_id;
-        }
-
-        /**
-         * Set the value of player4_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer4Id($player4_id)
-        {
-                $this->player4_id = $player4_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player5_id
-         */ 
-        public function getPlayer5Id()
-        {
-                return $this->player5_id;
-        }
-
-        /**
-         * Set the value of player5_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer5Id($player5_id)
-        {
-                $this->player5_id = $player5_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player6_id
-         */ 
-        public function getPlayer6Id()
-        {
-                return $this->player6_id;
-        }
-
-        /**
-         * Set the value of player6_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer6Id($player6_id)
-        {
-                $this->player6_id = $player6_id;
-
-                return $this;
-        }
 
         /**
          * Get the value of winningScore
@@ -291,7 +180,7 @@ use PDO;
          */ 
         public function setWinningScore($winning_score)
         {
-                $this->winningScore = $winning_score;
+                $this->winning_score = $winning_score;
 
                 return $this;
         }

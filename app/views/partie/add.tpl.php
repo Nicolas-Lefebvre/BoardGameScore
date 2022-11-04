@@ -92,6 +92,11 @@
       </div>
 
       <!-- ------------------------------------------- Fin dynamisation JS ------------------------------------------------------ -->
+      <div class="form-group">
+        <label for="winnerName">Gagnant :</label>
+        <input type="text" id="winnerName" name="winnerName">
+      </div>
+
 
       <div class="form-group">
         <label for="partieDate">Date :</label>

@@ -14,6 +14,7 @@ use PDO;
         protected $name;
         protected $genre;
         protected $won_parties;
+        private $score;
 
 
 
@@ -54,6 +55,33 @@ use PDO;
             $statement = $pdo->query("SELECT * FROM `player` ORDER BY `won_parties` DESC LIMIT 10");
             $results   = $statement->fetchAll(PDO::FETCH_CLASS, "App\Models\Player");
             return $results;
+        }
+
+        public function insert()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "INSERT INTO `player` (`name`) 
+                VALUES ('$this->name')" );
+
+                // Alors on récupère l'id auto-incrémenté généré par MySQL
+                $this->id = $pdo->lastInsertId();
+
+                // On retourne VRAI car l'ajout a parfaitement fonctionné
+            
+        }
+
+        public function add1PlayedPartie()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "UPDATE `player` SET `played_parties` = `played_parties` + 1 WHERE id = '$this->id' ;");
+     
+        }
+
+        public function add1Victory()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "UPDATE `player` SET `won_parties` = `won_parties` + 1 WHERE id = '$this->id' ;");
+       
         }
 
 
@@ -124,5 +152,37 @@ use PDO;
             $this->won_parties = $won_parties;
 
             return $this;
+        }
+
+        /**
+         * Get the value of score
+         */ 
+        public function getScore()
+        {
+                return $this->score;
+        }
+
+        /**
+         * Set the value of score
+         *
+         * @return  self
+         */ 
+        public function setScore($score)
+        {
+                $this->score = $score;
+
+                return $this;
+        }
+
+        /**
+         * Set the value of score
+         *
+         * @return  self
+         */ 
+        public function setId($id)
+        {
+                $this->id = $id;
+
+                return $this;
         }
 }
