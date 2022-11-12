@@ -43,6 +43,14 @@ use PDO;
         return $results;
         }
 
+        public static function findWinnersByGame($gameId)
+        {
+        $pdo       = Database::getPDO();
+        $statement = $pdo->query( "SELECT winner_id, count(*) FROM partie WHERE game_id=". $gameId." GROUP BY winner_id"  );
+        $results   = $statement->fetchAll( PDO::FETCH_KEY_PAIR);
+        return $results;
+        }
+
         public static function findAllByDate()
         {
         $pdo       = Database::getPDO();

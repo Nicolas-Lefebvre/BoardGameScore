@@ -12,19 +12,20 @@ class Game extends CoreModel
         // Propriétés
         //==============================
 
-        protected $name;
-        protected $editor;
-        protected $picture;
-        protected $played_parties;
-        protected $win_type;
-        protected $min_players;
-        protected $max_players;
-        protected $cooperative;
-        protected $team_play;
-        protected $record;
-        protected $recordman_id;
-        protected $most_victories;
-        protected $champion_id;
+        private $name;
+        private $author;
+        private $editor;
+        private $picture;
+        private $played_parties;
+        private $win_type;
+        private $min_players;
+        private $max_players;
+        private $cooperative;
+        private $team_play;
+        private $record;
+        private $recordman_id;
+        private $most_victories;
+        private $champion_id;
         
 
 
@@ -150,7 +151,10 @@ class Game extends CoreModel
                 SET
                         record = :record,
                         recordman_id = :recordman_id,
-                        played_parties = :played_parties
+                        played_parties = :played_parties,
+                        most_victories = :most_victories,
+                        champion_id = :champion_id
+
                 WHERE `id` = :id
                 ";
 
@@ -163,6 +167,8 @@ class Game extends CoreModel
                 $query->bindValue(':recordman_id', $this->recordman_id, PDO::PARAM_INT);
                 $query->bindValue(':played_parties', $this->played_parties, PDO::PARAM_INT);
                 $query->bindValue(':id', $this->id, PDO::PARAM_INT);
+                $query->bindValue(':most_victories', $this->most_victories, PDO::PARAM_INT);
+                $query->bindValue(':champion_id', $this->champion_id, PDO::PARAM_INT);
 
                 // Execution de la requête de mise à jour avec la méthode execute
                 $updatedRows = $query->execute();
@@ -435,6 +441,26 @@ class Game extends CoreModel
         public function setChampionId($champion_id)
         {
                 $this->champion_id = $champion_id;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of author
+         */ 
+        public function getAuthor()
+        {
+                return $this->author;
+        }
+
+        /**
+         * Set the value of author
+         *
+         * @return  self
+         */ 
+        public function setAuthor($author)
+        {
+                $this->author = $author;
 
                 return $this;
         }

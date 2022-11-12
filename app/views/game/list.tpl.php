@@ -1,4 +1,5 @@
 <section>
+    <?php d($gamesList);?>
 
     <table class="table table-striped col-md-12 col-lg-8">
         <thead>
@@ -34,13 +35,8 @@
                     </td>
 
                     <td class="text-center">
-                        <?php 
-                            if(isset($orderedplayersList[$currentGame->getRecordmanId()]))
-                            {
-                                $currentGame->getRecord() . " (" . $orderedplayersList[$currentGame->getRecordmanId()]->getName() . ")" ; 
-                            }
-                        ?>
-                        </td>
+                        <?= $currentGame->getRecord() . " (" . $orderedplayersList[$currentGame->getRecordmanId()]->getName() .")"; ?>
+                    </td>
                     <td class="text-center"><?= $currentGame->getPlayedParties(); ?></td>
 
                 </tr>

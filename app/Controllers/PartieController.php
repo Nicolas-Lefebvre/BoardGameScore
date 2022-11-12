@@ -112,6 +112,27 @@ class PartieController extends CoreController
             }
            }
 
+           // On regarde si le gagnant est le nouveau champion
+           // on commence par faire remonter toutes les parties liées au jeu dans un tableau :
+           $gameWinners = Partie::findWinnersByGame($gameId);
+
+           $gameObject = Game::find($partieModel->getGameId());
+
+           foreach ($gameWinners as $gameWinnerId => $numberOfVictories) {
+            if($winnerId == $gameWinnerId){
+
+              if($numberOfVictories + 1 > $gameObject->getMostVictories()){
+                
+                $gameObject->setMostVictories($numberOfVictories + 1 );
+                $gameObject->setChampionId($winnerId);
+
+                $gameObject->update();
+              }
+
+            }
+           }
+
+
            
 
 
@@ -150,7 +171,7 @@ class PartieController extends CoreController
 
           
             // On vérifie si le record du jeu est battu
-            $gameObject = Game::find($partieModel->getGameId());
+            // $gameObject = Game::find($partieModel->getGameId());
             $gameRecord = $gameObject->getRecord();
 
             //Ajout d'une partie jouée au jeu
@@ -186,6 +207,10 @@ class PartieController extends CoreController
             {
               
             }
+
+
+
+
 
             $this->redirect('partie-list');
 
