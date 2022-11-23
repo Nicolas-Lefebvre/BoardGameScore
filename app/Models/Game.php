@@ -136,8 +136,8 @@ class Game extends CoreModel
         public function insert()
         {
                 $pdo       = Database::getPDO();
-                $pdo->query( "INSERT INTO `game` (`name`, `editor`, `min_players`,`max_players`, `win_type`, `cooperative`, `team_play`) 
-                VALUES ('$this->name', '$this->editor', $this->min_players, $this->max_players, '$this->win_type', $this->cooperative, $this->team_play)" );
+                $pdo->query( "INSERT INTO `game` (`name`, `author`, `editor`, `min_players`,`max_players`, `win_type`, `cooperative`, `team_play`) 
+                VALUES ('$this->name', '$this->author', '$this->editor', $this->min_players, $this->max_players, '$this->win_type', $this->cooperative, $this->team_play)" );
         }
 
         public function update()

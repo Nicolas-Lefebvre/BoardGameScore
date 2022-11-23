@@ -21,7 +21,12 @@
       </div>
 
       <div class="form-group">
-        <label for="playersNumber">Editeur :</label>
+        <label for="author">Auteur :</label>
+        <input type="text" id="gameAuthor" name="gameAuthor">
+      </div>
+
+      <div class="form-group">
+        <label for="editor">Editeur :</label>
         <input type="text" id="gameEditor" name="gameEditor">
       </div>
 

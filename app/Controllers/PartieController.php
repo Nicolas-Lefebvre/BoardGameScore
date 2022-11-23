@@ -115,22 +115,33 @@ class PartieController extends CoreController
            // On regarde si le gagnant est le nouveau champion
            // on commence par faire remonter toutes les parties liées au jeu dans un tableau :
            $gameWinners = Partie::findWinnersByGame($gameId);
-
+          //  d($gameWinners);
            $gameObject = Game::find($partieModel->getGameId());
-
-           foreach ($gameWinners as $gameWinnerId => $numberOfVictories) {
-            if($winnerId == $gameWinnerId){
-
-              if($numberOfVictories + 1 > $gameObject->getMostVictories()){
-                
-                $gameObject->setMostVictories($numberOfVictories + 1 );
-                $gameObject->setChampionId($winnerId);
-
-                $gameObject->update();
+          //  d($gameObject);
+           if($gameWinners)
+           {
+              foreach ($gameWinners as $gameWinnerId => $numberOfVictories) 
+              {
+                if($winnerId == $gameWinnerId)
+                {
+                  if($numberOfVictories + 1 > $gameObject->getMostVictories())
+                  {  
+                    $gameObject->setMostVictories($numberOfVictories + 1 );
+                    $gameObject->setChampionId($winnerId);
+                  }
+                }
               }
-
-            }
            }
+           else
+           {
+            $gameObject->setMostVictories(1);
+            $gameObject->setChampionId($winnerId);
+           }
+              //  if($winnerId == $gameWinnerId){
+
+                // $gameObject->update();
+
+           
 
 
            
@@ -190,7 +201,7 @@ class PartieController extends CoreController
               {
                 $gameObject->setRecord($winningScore);
                 $gameObject->setRecordmanId($winnerId);
-                $gameObject->update();
+                // $gameObject->update();
               }
             }
             elseif ($winType == "lowest_score")
@@ -200,7 +211,7 @@ class PartieController extends CoreController
                 $gameObject->setRecord($winningScore);
                 
                 $gameObject->setRecordmanId($winnerId);
-                $gameObject->update();
+                // $gameObject->update();
               }
             }
             elseif ($winType == "no_score")
@@ -208,7 +219,7 @@ class PartieController extends CoreController
               
             }
 
-
+            $gameObject->update();
 
 
 

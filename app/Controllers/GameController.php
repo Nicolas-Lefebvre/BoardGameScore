@@ -29,10 +29,12 @@ Class GameController extends CoreController
     {
         $gameModel = new Game;
 
-
         //RECUPERATION DES DONNEES ENVOYEES PAR LE FORMULAIRES POUR L'AJOUT D'UN NOUVEAU JEU DANS LA DATABASE
         if (isset($_POST) && !empty($_POST)) {
             $gameNameToAdd = $_POST['gameName'];
+
+            $gameAuthorToAdd = $_POST['gameAuthor'];
+            
             // d($gameNameToAdd);
             $gameEditorToAdd = $_POST['gameEditor'];
             // d($gameEditorToAdd);
@@ -52,6 +54,7 @@ Class GameController extends CoreController
             //  Ajout du nouveau jeu à l'objet
             $gameModel->setName($gameNameToAdd);
             $gameModel->setEditor($gameEditorToAdd);
+            $gameModel->setAuthor($gameAuthorToAdd);
             $gameModel->setMinPlayers($minPlayerNumberToAdd);
             $gameModel->setMaxPlayers($maxPlayerNumberToAdd);
             $gameModel->setwinType($winTypeToAdd);

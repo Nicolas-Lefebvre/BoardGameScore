@@ -30,12 +30,17 @@
                             if(isset($orderedplayersList[$currentGame->getChampionId()]))
                             {
                                 echo $orderedplayersList[$currentGame->getChampionId()]->getName() . " (" . $currentGame->getMostVictories() ." victoires)";
-                            }   
+                            }else{echo "<i>Non renseigné<i>";}   
                         ?>
                     </td>
 
                     <td class="text-center">
-                        <?= $currentGame->getRecord() . " (" . $orderedplayersList[$currentGame->getRecordmanId()]->getName() .")"; ?>
+                        <?php
+                            if(null != ($currentGame->getRecord()))
+                            {
+                                echo $currentGame->getRecord() . " (" . $orderedplayersList[$currentGame->getRecordmanId()]->getName() .")"; 
+                            }else{echo "<i>Non renseigné<i>";}
+                        ?>
                     </td>
                     <td class="text-center"><?= $currentGame->getPlayedParties(); ?></td>
 
