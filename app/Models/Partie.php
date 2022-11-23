@@ -1,22 +1,21 @@
 <?php
 
-    class Partie
-    {
+namespace App\Models;
+
+use App\Utils\Database;;
+use PDO;
+
+
+        class Partie extends CoreModel
+        {
         //==============================
         // Propriétés
         //==============================
-        
-        protected $id;
+
         protected $game_id;
         protected $date;
         protected $players_number;
-        protected $winner;
-        protected $player1_id;
-        protected $player2_id;
-        protected $player3_id;
-        protected $player4_id;
-        protected $player5_id;
-        protected $player6_id;
+        protected $winner_id;
         protected $winning_score;
 
 
@@ -28,46 +27,62 @@
         // Méthodes 
         //==============================
 
-        public function find( $id )
+        public static function find( $id )
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `game` WHERE `id` = " . $id );
-        $resultObject = $statement->fetchObject( "Game" );      
+        $resultObject = $statement->fetchObject( "App\Models\Game" );      
         return $resultObject;
         }
 
-        public function findAll()
+        public static function findAll()
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `partie`" );
-        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Partie" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "App\Models\Partie" );
         return $results;
         }
 
-        public function findAllByDate()
+        public static function findWinnersByGame($gameId)
+        {
+        $pdo       = Database::getPDO();
+        $statement = $pdo->query( "SELECT winner_id, count(*) FROM partie WHERE game_id=". $gameId." GROUP BY winner_id"  );
+        $results   = $statement->fetchAll( PDO::FETCH_KEY_PAIR);
+        return $results;
+        }
+
+        public static function findAllByDate()
         {
         $pdo       = Database::getPDO();
         $statement = $pdo->query( "SELECT * FROM `partie` ORDER BY `date` DESC" );
-        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "Partie" );
+        $results   = $statement->fetchAll( PDO::FETCH_CLASS, "App\Models\Partie" );
         return $results;
         }
 
-        public function findPartieWinningScore( $id )
+        public static function findPartieWinningScore( $id )
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT `winning_score` FROM `partie` WHERE `id` = ".$id);
-        $resultObject = $statement->fetchObject( "Partie" );      
+        $resultObject = $statement->fetchObject( "App\Models\Partie" );      
         return $resultObject;
         }
 
-        public function findPartieLowestScore( $id )
+        public static function findPartieLowestScore( $id )
         {
         $pdo          = Database::getPDO();
         $statement    = $pdo->query( "SELECT * FROM `partie` WHERE `id` = " . $id ." ORDER BY `player%_score` ASC LIMIT 1");
-        $resultObject = $statement->fetchObject( "Partie" );      
+        $resultObject = $statement->fetchObject( "App\Models\Partie" );      
         return $resultObject;
         }
 
+        public function insert()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "INSERT INTO `partie` (`game_id`, `date`, `players_number`,`winner_id`, `winning_score`) 
+                VALUES ('{$this->game_id}', '{$this->date}', {$this->players_number}, {$this->winner_id}, '{$this->winning_score}')" );
+
+                $this->id = $pdo->lastInsertId();
+        }
 
 
 
@@ -75,14 +90,7 @@
         // Getters & Setters 
         //==============================
 
-        /**
-         * Get the value of description
-         */ 
-        public function getId()
-        {
-            return $this->id;
-        }
-      
+
 
         /**
          * Get the value of game_id
@@ -147,9 +155,9 @@
         /**
          * Get the value of winner
          */ 
-        public function getWinner()
+        public function getWinnerId()
         {
-                return $this->winner;
+                return $this->winner_id;
         }
 
         /**
@@ -157,132 +165,13 @@
          *
          * @return  self
          */ 
-        public function setWinner($winner)
+        public function setWinnerId($winner_id)
         {
-                $this->winner = $winner;
+                $this->winner_id = $winner_id;
 
                 return $this;
         }
 
-        /**
-         * Get the value of player1_id
-         */ 
-        public function getPlayer1Id()
-        {
-                return $this->player1_id;
-        }
-
-        /**
-         * Set the value of player1_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer1Id($player1_id)
-        {
-                $this->player1_id = $player1_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player2_id
-         */ 
-        public function getPlayer2Id()
-        {
-                return $this->player2_id;
-        }
-
-        /**
-         * Set the value of player2_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer2Id($player2_id)
-        {
-                $this->player2_id = $player2_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player3_id
-         */ 
-        public function getPlayer3Id()
-        {
-                return $this->player3_id;
-        }
-
-        /**
-         * Set the value of player3_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer3Id($player3_id)
-        {
-                $this->player3_id = $player3_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player4_id
-         */ 
-        public function getPlayer4Id()
-        {
-                return $this->player4_id;
-        }
-
-        /**
-         * Set the value of player4_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer4Id($player4_id)
-        {
-                $this->player4_id = $player4_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player5_id
-         */ 
-        public function getPlayer5Id()
-        {
-                return $this->player5_id;
-        }
-
-        /**
-         * Set the value of player5_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer5Id($player5_id)
-        {
-                $this->player5_id = $player5_id;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of player6_id
-         */ 
-        public function getPlayer6Id()
-        {
-                return $this->player6_id;
-        }
-
-        /**
-         * Set the value of player6_id
-         *
-         * @return  self
-         */ 
-        public function setPlayer6Id($player6_id)
-        {
-                $this->player6_id = $player6_id;
-
-                return $this;
-        }
 
         /**
          * Get the value of winningScore
@@ -299,7 +188,7 @@
          */ 
         public function setWinningScore($winning_score)
         {
-                $this->winningScore = $winning_score;
+                $this->winning_score = $winning_score;
 
                 return $this;
         }

@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <!-- Services block-->
-    <div id="footer-services" class="py-5">
+    <!-- <div id="footer-services" class="py-5">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 service-column">
@@ -26,10 +26,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Main block - menus, subscribe form-->
     <div id="footer-menu" class="py-5">
-      <div class="container">
+      <div class="container bg-secondary">
         <div class="row">
           <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="font-weight-bold text-uppercase text-lg text-dark mb-3">oShop</div>

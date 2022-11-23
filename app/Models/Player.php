@@ -1,123 +1,188 @@
 <?php
 
-class player
-{
-    //==============================
-    // Propriétés
-    //==============================
+namespace App\Models;
 
-    protected $id;
-    protected $name;
-    protected $genre;
-    protected $won_parties;
+use App\Utils\Database;
+use PDO;
 
-
-
-    // Foreign Keys
-    //none
-
-    //==============================
-    // Méthodes
-    //==============================
-
-    public function find($id)
+    class player extends CoreModel
     {
-        $pdo          = Database::getPDO();
-        $statement    = $pdo->query("SELECT * FROM `player` WHERE `id` = " . $id);
-        $resultObject = $statement->fetchObject("Player");
-        return $resultObject;
-    }
+        //==============================
+        // Propriétés
+        //==============================
 
-    public function findAll()
-    {
-        $pdo       = Database::getPDO();
-        $statement = $pdo->query("SELECT * FROM `player`");
-        $results   = $statement->fetchAll(PDO::FETCH_CLASS, "Player");
-        return $results;
-    }
-
-    public function findBestPlayers()
-    {
-        $pdo       = Database::getPDO();
-        $statement = $pdo->query("SELECT * FROM `player` ORDER BY `won_parties` DESC LIMIT 10");
-        $results   = $statement->fetchAll(PDO::FETCH_CLASS, "Player");
-        return $results;
-    }
+        protected $name;
+        protected $genre;
+        protected $won_parties;
+        private $score;
 
 
 
-    // Requete SDL qui link tous les tables
-    //    SELECT * FROM `partie` INNER JOIN   `player` ON `partie`.`winner`=`player`.`id` INNER JOIN   `game` ON `partie`.`game_id`=`game`.`id`
+        // Foreign Keys
+        //none
 
-    //==============================
-    // Getters & Setters
-    //==============================
+        //==============================
+        // Méthodes
+        //==============================
 
-    /**
-     * Get the value of description
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+        public static function find($id)
+        {
+            $pdo          = Database::getPDO();
+            $statement    = $pdo->query("SELECT * FROM `player` WHERE `id` = " . $id);
+            $resultObject = $statement->fetchObject("App\Models\Player");
+            return $resultObject;
+        }
 
-    /**
-     * Get the value of name
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+        public static function findAll()
+        {
+            $pdo       = Database::getPDO();
+            $statement = $pdo->query("SELECT * FROM `player`");
+            $results   = $statement->fetchAll(PDO::FETCH_CLASS, "App\Models\Player");
+            return $results;
+        }
 
-    /**
-     * Set the value of name
-     *
-     * @return  self
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
+        public static function findAllNames()
+        {
+            $pdo       = Database::getPDO();
+            $statement = $pdo->query("SELECT `name` FROM `player`");
+            $results   = $statement->fetchAll(PDO::FETCH_COLUMN);
+            return $results;
+        }
+
+        public static function findBestPlayers()
+        {
+            $pdo       = Database::getPDO();
+            $statement = $pdo->query("SELECT * FROM `player` ORDER BY `won_parties` DESC LIMIT 10");
+            $results   = $statement->fetchAll(PDO::FETCH_CLASS, "App\Models\Player");
+            return $results;
+        }
+
+        public function insert()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "INSERT INTO `player` (`name`) 
+                VALUES ('$this->name')" );
+
+                // Alors on récupère l'id auto-incrémenté généré par MySQL
+                $this->id = $pdo->lastInsertId();
+
+                // On retourne VRAI car l'ajout a parfaitement fonctionné
+            
+        }
+
+        public function add1PlayedPartie()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "UPDATE `player` SET `played_parties` = `played_parties` + 1 WHERE id = '$this->id' ;");
+     
+        }
+
+        public function add1Victory()
+        {
+                $pdo       = Database::getPDO();
+                $pdo->query( "UPDATE `player` SET `won_parties` = `won_parties` + 1 WHERE id = '$this->id' ;");
+       
+        }
 
 
-    /**
-     * Get the value of genre
-     */ 
-    public function getGenre()
-    {
-        return $this->genre;
-    }
 
-    /**
-     * Set the value of genre
-     *
-     * @return  self
-     */ 
-    public function setGenre($genre)
-    {
-        $this->genre = $genre;
+        // Requete SDL qui link tous les tables
+        //    SELECT * FROM `partie` INNER JOIN   `player` ON `partie`.`winner`=`player`.`id` INNER JOIN   `game` ON `partie`.`game_id`=`game`.`id`
 
-        return $this;
-    }
+        //==============================
+        // Getters & Setters
+        //==============================
 
-    /**
-     * Get the value of wonParties
-     */ 
-    public function getWonParties()
-    {
-        return $this->won_parties;
-    }
 
-    /**
-     * Set the value of wonParties
-     *
-     * @return  self
-     */ 
-    public function setWonParties($won_parties)
-    {
-        $this->won_parties = $won_parties;
+        /**
+         * Get the value of name
+         */
+        public function getName()
+        {
+            return $this->name;
+        }
 
-        return $this;
-    }
+        /**
+         * Set the value of name
+         *
+         * @return  self
+         */
+        public function setName($name)
+        {
+            $this->name = $name;
+            return $this;
+        }
+
+
+        /**
+         * Get the value of genre
+         */ 
+        public function getGenre()
+        {
+            return $this->genre;
+        }
+
+        /**
+         * Set the value of genre
+         *
+         * @return  self
+         */ 
+        public function setGenre($genre)
+        {
+            $this->genre = $genre;
+
+            return $this;
+        }
+
+        /**
+         * Get the value of wonParties
+         */ 
+        public function getWonParties()
+        {
+            return $this->won_parties;
+        }
+
+        /**
+         * Set the value of wonParties
+         *
+         * @return  self
+         */ 
+        public function setWonParties($won_parties)
+        {
+            $this->won_parties = $won_parties;
+
+            return $this;
+        }
+
+        /**
+         * Get the value of score
+         */ 
+        public function getScore()
+        {
+                return $this->score;
+        }
+
+        /**
+         * Set the value of score
+         *
+         * @return  self
+         */ 
+        public function setScore($score)
+        {
+                $this->score = $score;
+
+                return $this;
+        }
+
+        /**
+         * Set the value of score
+         *
+         * @return  self
+         */ 
+        public function setId($id)
+        {
+                $this->id = $id;
+
+                return $this;
+        }
 }

@@ -3,26 +3,23 @@
 
 
 <div class="col-12">
-    <form action="<?= $_SERVER['BASE_URI'] . "/ajout-partie" ?>" method="POST">
+    <form action="" method="POST">
 
       <div class="form-group">
         <label for="gameName">Nom du jeu :</label>
-        <select class="form-control" id="gameName">
+        <select class="form-control" id="gameName" name="gameId">
             <?php foreach($gamesList as $game): ?>
-                <option><?= $game->getName(); ?> </option>
+                <option value="<?=$game->getId()?>"><?= $game->getName(); ?> </option>
             <?php endforeach;  ?>
 
         </select>
-        Votre jeu n'est pas présent dans la liste, <a href="<?= $_SERVER['BASE_URI'] . "/ajout-jeu" ?>">ajouter le à votre bibliothèque</a>
+        Votre jeu n'est pas présent dans la liste, <a href="<?= $router->generate('game-add')?>">ajouter le à votre bibliothèque</a>
       </div>
-
-
-
 
 
       <div class="form-group">
         <label for="playersNumber">Nombre de joueurs :</label>
-        <input type="number" id="playerNumber" name="playerNumber" min="1" max="6">
+        <input type="number" id="playerNumber" name="playerNumber" min="1" >
         <button id="validateNumberOfPlayer" style="font-size:.5rem">Confirmer</button>
       </div>
 
@@ -86,9 +83,7 @@
                   divScore.append(labelScore)
                   labelScore.append(labelScoreText);
                   divScore.append(inputScoreElement);
-                  
-                  
-
+                                   
                 }
                 
                     
@@ -96,8 +91,15 @@
         </script>
       </div>
 
+      <!-- ------------------------------------------- Fin dynamisation JS ------------------------------------------------------ -->
       <div class="form-group">
-        <label for="playersNumber">Date :</label>
+        <label for="winnerName">Gagnant :</label>
+        <input type="text" id="winnerName" name="winnerName">
+      </div>
+
+
+      <div class="form-group">
+        <label for="partieDate">Date :</label>
         <input type="date" id="partieDate" name="partieDate">
       </div>
 
