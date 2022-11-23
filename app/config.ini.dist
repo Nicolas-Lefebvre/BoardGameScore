@@ -4,6 +4,6 @@
 ; ensuite, il faut remplir les paramètres ci-dessous dans le fichier app/config.ini
 
 DB_HOST=localhost   
-DB_USERNAME=
-DB_PASSWORD=
-DB_NAME=
+DB_USERNAME=explorateur
+DB_PASSWORD=Ereul9Aeng
+DB_NAME=BoardGameScores
