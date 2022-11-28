@@ -14,3 +14,63 @@
   height:1rem;
   /* width:100px; */
 }
+
+.navbar{
+  /* background-color: rgba(87, 100, 99, 0.288); */
+  background-color: #537aa1;
+  color: white !important;
+  margin-bottom: 2rem;
+}
+
+nav a{
+  color: white !important;
+}
+
+nav a:hover{
+ display: block !important;
+}
+
+nav a.dropdown-item:hover{
+  color: #537aa1 !important;
+}
+
+.dropdown-menu{
+  background-color: #537aa1
+}
+
+
+.card{
+  border-color: #537aa1;
+}
+
+.card h2{
+  font-size: 2rem;
+  color: #537aa1;
+}
+
+.card ol{
+    display : inline-block;
+    width:100%;
+    /* margin-left: 5rem !important; */
+    margin :auto;
+    text-align:left;
+}
+
+.card li{
+  text-align: left;
+  /* list-style-position: inside; */
+  /* padding-left: 50px; */
+}
+
+.card .btn{
+  margin-top: 1rem;
+  background-color: #537aa1;
+  border-color: #537aa1;
+  
+  /* display: flex; */
+  /* justify-content: flex-end; */
+}
+
+footer .row{
+  text-align: right;
+}

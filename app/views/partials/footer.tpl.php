@@ -29,10 +29,10 @@
     </div> -->
     <!-- Main block - menus, subscribe form-->
     <div id="footer-menu" class="py-5">
-      <div class="container bg-secondary">
+      <div class="container">
         <div class="row">
-          <div class="col-lg-6 mb-5 mb-lg-0">
-            <div class="font-weight-bold text-uppercase text-lg text-dark mb-3">oShop</div>
+          <div class="col-lg-12 mb-5 mb-lg-0">
+            <div class="font-weight-bold text-uppercase text-lg text-dark mb-3">Board Game scores</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -67,7 +67,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-lg-6">
+          <!-- <div class="col-lg-6">
             <h6 class="text-uppercase text-dark mb-3">Recevez nos offres promotionnelles</h6>
             <p class="mb-3"> Lorem ipsum dolor sit amet, at itaque temporibus.</p>
             <form action="#" id="newsletter-form">
@@ -78,7 +78,7 @@
                 </div>
               </div>
             </form>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-3 text-center text-md-left">
-            <p class="mb-md-0">Tous droits réservés<br>© 2020 oShop</p>
+            <p class="mb-md-0">Tous droits réservés<br>© 2022 NL</p>
           </div>
           <div class="col-md-6 text-center">
             <p class="mb-md-0">

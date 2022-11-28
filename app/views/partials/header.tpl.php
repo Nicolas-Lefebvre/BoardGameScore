@@ -41,7 +41,7 @@
           aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
         <!-- Navbar Collapse -->
         <div id="navbarCollapse" class="collapse navbar-collapse">
-          <ul class="navbar-nav mx-auto">
+          <ul class="navbar-nav mx-auto d-flex align-items-end">
             
             <li class="nav-item">
               <a href="<?= $router->generate('main-home') ?>" class="nav-link active">

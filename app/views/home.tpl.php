@@ -3,8 +3,8 @@
   <div class="container-fluid">
 
     <div class="row mx-0">
-          <div class="col-md-6">
-            <div class="card border-1 text-dark text-center">
+          <div class="col-md-10 col-lg-8 col-xl-5 mx-auto mb-4">
+            <div class="card border-1 text-dark text-center mb-2">
               <!-- <div class="card-img-overlay d-flex align-items-center"> -->
                 <div class="w-100 py-3">
                   <h2 class="display-4 font-weight-bold mb-4">
@@ -22,7 +22,7 @@
                   </ol>
                   <a 
                     href="<?= $router->generate('game-list') ?>" 
-                    class="btn btn-dark"
+                    class="btn btn-dark pull-right pull-right mr-4"
                   >
                     Voir plus
                   </a>
@@ -33,8 +33,8 @@
     
 
     <!-- <div class="row mx-0"> -->
-          <div class="col-md-6">
-            <div class="card border-1 text-dark text-center">
+          <div class="col-md-10 col-lg-8 col-xl-5 mx-auto">
+            <div class="card border-1 text-dark text-center mb-2">
               <!-- <div class="card-img-overlay d-flex align-items-center"> -->
                 <div class="w-100 py-3">
                   <h2 class="display-4 font-weight-bold mb-4">
@@ -49,7 +49,7 @@
                   </ol>
                   <a 
                     href="#" 
-                    class="btn btn-dark"
+                    class="btn btn-dark pull-right mr-4"
                   >
                     Voir plus
                   </a>
