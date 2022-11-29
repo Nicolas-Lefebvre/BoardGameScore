@@ -1,5 +1,8 @@
-<section>
-    <?php d($gamesList);?>
+<section class="list-section">
+
+    <h1>
+        Liste des jeux
+    </h1>
 
     <table class="table table-striped col-md-12 col-lg-8">
         <thead>
@@ -7,8 +10,8 @@
                     <th scope="col" class="text-center">#</th>
                     <th scope="col" class="text-center">Nom</th>
                     <th scope="col" class="text-center">Editeur</th>
-                    <th scope="col" class="text-center">Champion <img class="champion-icon" src="<?= $_SERVER['BASE_URI'] . "/assets/images/coupe.png" ?>" alt="Grapefruit slice atop a pile of other slices"></th>
-                    <th scope="col" class="text-center">meilleur score</th>
+                    <th scope="col" class="text-center">Champion <img class="champion-icon" src="<?= $_SERVER['BASE_URI'] . "/assets/images/coupe.png" ?>" alt="icone de coupe"></th>
+                    <th scope="col" class="text-center">meilleur score <img class="champion-icon" src="<?= $_SERVER['BASE_URI'] . "/assets/images/medaille.png" ?>" alt="icone de medaille"></th>
                     <th scope="col" class="text-center">Nombre de parties</th>
 
             </tr>

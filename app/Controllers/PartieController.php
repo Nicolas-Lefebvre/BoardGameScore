@@ -85,15 +85,15 @@ class PartieController extends CoreController
 
 
             //On insère les nouveaux joueurs dans la BDD et on récupère au passage les id des nouveaux joueurs desormais insérés dans la BDD
-            foreach ($partiePlayers as  $partiePlayer) 
+            foreach ($players as  $player) 
             {
-              if( empty($partiePlayer->getId()))
+              if( empty($player->getId()))
               {
-                $partiePlayer->insert();
+                $player->insert();
               }
 
               //on ajoute un au nombre de parties played de chaque joueur
-              $partiePlayer->add1PlayedPartie();
+              $player->add1PlayedPartie();
 
             }
 
@@ -102,13 +102,13 @@ class PartieController extends CoreController
             // on cherche le winner id
            $winnerId="";
            $winnerName = $_POST['winnerName'];
-           foreach($partiePlayers as $partiePlayer)
+           foreach($players as $player)
            {
-            if($winnerName === $partiePlayer->getName())
+            if($winnerName === $player->getName())
             {
-              $winnerId = $partiePlayer->getId();
+              $winnerId = $player->getId();
               //On ajoute un au nombre de parties gagnées à ce joueur;
-              $partiePlayer->add1Victory();
+              $player->add1Victory();
             }
            }
 
@@ -234,83 +234,6 @@ class PartieController extends CoreController
 
 
            
-
-
-
-
-
-
-
-
-
-
-
-            
-
-            // // Tout d'abord on récupère la liste des joueurs participants entrés dans le formulaire, et on les met dans un tableau
-            // $partiePlayers = [];
-            // for($i=1 ; $i <= $playerNumber ; $i++)
-            // {
-            //   $partiePlayers[] = $_POST['joueur'.$i];
-            // }
-            
-            // //Puis on compare ce tableau aux joueurs existants dans la BDD : si le joueur existe déjà, on stocke son id dans un nouveau tableau ($newPartiePlayers)
-            // $existingPartiePlayers=[];
-            // foreach($partiePlayers as $currentPartiePlayer)
-            // {
-            //   foreach($playerList as $currentPlayer)
-            //   {
-            //     if($currentPlayer->getName() == $currentPartiePlayer)
-            //     {
-            //       $existingPartiePlayers[$currentPlayer->getName()] = $currentPlayer->getId();
-            //     }
-            //   }             
-            // }
-            // d($existingPartiePlayers);
-          
-            // //Puis on regarde quel joueurs qui a participé n'est pas déjà existants dans la BDD: pour ceux qui n'existent pas, on les stocke dans un nouveau tableau ($newPartiePlayers)
-            // // On procède en comparant tous les nom existants dans la BDD avec les noms de ceux ayant participé, et pour ceux qui n'y sont pas, on les ajoute au tableau.
-            // $playerNameList = Player::findAllNames();
-            // $newPartiePlayers=[];
-            // foreach($partiePlayers as $currentPartiePlayer)
-            // {
-            //     if(!in_array($currentPartiePlayer, $playerNameList))
-            //     {
-            //       $newPartiePlayers[]=$currentPartiePlayer;
-            //     }
-            // }      
-            // d($newPartiePlayers);
-            
-            // //Calcul du gagnant
-            // $winType = Game::findWinType($gameId);
-
-            // if($winType == "highest_score")
-            // {
-
-            // }
-            // elseif ($winType == "lowest_score")
-            // {
-
-            // }
-            // elseif ($winType == "no_score")
-            // {
-              
-            // }
-
-            // //attribution des scores à chacun
-            // for($i=0 ; $i < $playerNumber ; $i++)
-            // {
-            //   foreach($newPartiePlayers as $newPartiePlayer)
-            //   {
-            //     if($_POST['joueur'.$i] === $newPartiePlayer)
-            //     {
-            //       $newPartiePlayers[$i] = [$_POST['Joueur'.$i] =>  $_POST['scoreJoueur'.$i]];
-            //     }
-            //   }
-            // }
-            // d($newPartiePlayers);
-            // d($partiePlayers);
-            // // $partieModel->insert();
 
         }
         else{

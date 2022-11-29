@@ -38,9 +38,95 @@ nav a.dropdown-item:hover{
   background-color: #537aa1
 }
 
+a.dropdown-item:active {
+  background-color: white;
+}
+
+header li{
+  margin-right: 2rem;
+  font-size: 1.2rem;
+}
+
+.fa-bars{
+  color:rgb(173, 169, 169);
+}
+
+/* @media(max-width:750px){
+  section.list-section{
+    justify-content: space-evenly;
+    flex-direction: column;
+    display: flex;
+    max-width: 100%%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+} */
+
+
+/* @media (min-width: 800px){
+  section.list-section{
+    justify-content: space-evenly;
+    flex-direction: column;
+    display: flex;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+} */
+
+#header-img{
+  width:100%;
+  /* position: relative; */
+  height: 300px;
+  /* overflow: hidden; */
+  margin-bottom: 3rem;
+}
+
+
+section{
+  min-height: 500px;
+}
+
+section h1{
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+section table{
+  align-self: flex-end;
+  margin: auto;
+  border: solid 1.2px #537aa1;
+  /* border-radius: 30px !important; */
+  border-collapse:collapse;
+    border:solid #537aa1 1px;
+    border-radius:60px;
+    padding: auto;
+}
+/* td, th {
+  border-left:solid black 1px;
+  border-top:solid black 1px;
+} */
+
+
+thead th {
+  background-color: #537aa1;
+  border-top: none;
+  color: white;
+}
+
+/* td:first-child, th:first-child {
+   border-left: none;
+} */
+
 
 .card{
   border-color: #537aa1;
+
+}
+
+table i{
+  font-weight:normal;
+  font-size: .8rem;
 }
 
 .card h2{
@@ -74,3 +160,11 @@ nav a.dropdown-item:hover{
 footer .row{
   text-align: right;
 }
+
+/* .footer-title{
+  color :#537aa1;
+}
+
+.footer-phrase {
+  color:#537aa1;
+} */

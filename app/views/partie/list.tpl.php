@@ -1,4 +1,8 @@
-<section>
+<section class="list-section">
+
+    <h1>
+        Liste des parties
+    </h1>
 
     <table class="table table-striped col-md-12 col-lg-8">
         <thead>
@@ -16,7 +20,14 @@
         <?php  foreach($partiesList as $currentPartie):   ?>
             <tr>
                 <th scope="row" class="text-center"><?= $currentPartie->getId(); ?></th>
-                <th scope="row" class="text-center"><?= $currentPartie->getDate(); ?></th>
+                <th scope="row" class="text-center">
+                    <time datetime="DD-MM-YYYY">
+                        <?=date('d M Y',strtotime($currentPartie->getDate())); ?>
+                            <i>
+                                <?=date('H:i',strtotime($currentPartie->getDate())); ?>
+                            </i>
+                    </time>
+                </th>
                 <td class="text-center"><?=$orderedGamesList[$currentPartie->getGameId()]->getName() ?></td>
                 <td class="text-center"><?= $currentPartie->getPlayersNumber(); ?></td>
                 <td class="text-center"><?= $orderedPlayersList[$currentPartie->getWinnerId()]->getName(); ?></td>

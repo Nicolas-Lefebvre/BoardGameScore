@@ -1,9 +1,11 @@
+<img id="header-img" src="<?= $_SERVER['BASE_URI'] . "/assets/images/pexels-ylanite-koppens-776654 (1).jpg" ?>" alt="">
+
 <section>
 
   <div class="container-fluid">
 
-    <div class="row mx-0">
-          <div class="col-md-10 col-lg-8 col-xl-5 mx-auto mb-4">
+    <div class="col mx-0">
+          <div class="col-md-10 col-lg-8 col-xl-6 mx-auto mb-4">
             <div class="card border-1 text-dark text-center mb-2">
               <!-- <div class="card-img-overlay d-flex align-items-center"> -->
                 <div class="w-100 py-3">
@@ -33,7 +35,7 @@
     
 
     <!-- <div class="row mx-0"> -->
-          <div class="col-md-10 col-lg-8 col-xl-5 mx-auto">
+          <div class="col-md-10 col-lg-8 col-xl-6 mx-auto">
             <div class="card border-1 text-dark text-center mb-2">
               <!-- <div class="card-img-overlay d-flex align-items-center"> -->
                 <div class="w-100 py-3">

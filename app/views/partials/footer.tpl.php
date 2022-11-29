@@ -32,8 +32,8 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mb-5 mb-lg-0">
-            <div class="font-weight-bold text-uppercase text-lg text-dark mb-3">Board Game scores</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+            <div class="footer-title font-weight-bold text-uppercase text-lg text-dark mb-3">Board Game scores</div>
+            <p class="footer-phrase">Keep track of your board game scores !</p>
             <ul class="list-inline">
               <li class="list-inline-item">
                 <a href="#" target="_blank" title="twitter" class="text-muted text-hover-primary">
