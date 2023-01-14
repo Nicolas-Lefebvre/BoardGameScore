@@ -1,6 +1,6 @@
 <section class="list-section">
 
-    <h1>
+    <h1 class="list-h1">
         Liste des parties
     </h1>
 
